@@ -176,6 +176,24 @@ header {
 .progress-bar-wrap { background: var(--surface2); border-radius: 20px; height: 6px; margin-bottom: 1.5rem; overflow: hidden; }
 .progress-bar { background: var(--green); height: 6px; border-radius: 20px; transition: width 0.3s; }
 .progress-label { font-size: 12px; color: var(--text3); margin-bottom: 6px; }
+
+@media print {
+  body * { visibility: hidden; }
+  #print-area, #print-area * { visibility: visible; }
+  #print-area { position: absolute; top: 0; left: 0; width: 100%; font-family: 'Segoe UI', system-ui, sans-serif; color: #1a1a1a; }
+  .print-header { text-align: center; margin-bottom: 1.5rem; border-bottom: 1px solid #ccc; padding-bottom: 0.75rem; }
+  .print-header h1 { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+  .print-header p { font-size: 12px; color: #666; }
+  .print-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .print-cat { break-inside: avoid; margin-bottom: 12px; }
+  .print-cat-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #666; margin-bottom: 6px; border-bottom: 0.5px solid #ccc; padding-bottom: 3px; }
+  .print-item { display: flex; align-items: center; gap: 8px; font-size: 12px; padding: 3px 0; border-bottom: 0.5px solid #eee; }
+  .print-item:last-child { border-bottom: none; }
+  .print-item.done { text-decoration: line-through; color: #aaa; }
+  .print-box { width: 12px; height: 12px; border: 1px solid #999; border-radius: 2px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 9px; }
+  .print-box.checked { background: #1D9E75; border-color: #1D9E75; color: white; }
+  .print-footer { margin-top: 1.5rem; text-align: center; font-size: 10px; color: #999; border-top: 0.5px solid #eee; padding-top: 0.5rem; }
+}
 </style>
 </head>
 <body>
@@ -209,7 +227,10 @@ header {
   <div id="view-compra" class="view">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
       <div class="progress-label" id="progressLabel">0 de 0 artículos marcados</div>
-      <button onclick="resetCompra()" style="font-size:11px;color:var(--text3);background:none;border:none;cursor:pointer;">Reiniciar</button>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <button onclick="printCompra()" style="font-size:11px;color:var(--green-dark);background:var(--green-light);border:0.5px solid var(--green-mid);border-radius:20px;padding:4px 12px;cursor:pointer;font-weight:500;">🖨️ Imprimir</button>
+        <button onclick="resetCompra()" style="font-size:11px;color:var(--text3);background:none;border:none;cursor:pointer;">Reiniciar</button>
+      </div>
     </div>
     <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
     <div class="compra-grid" id="compraGrid"></div>
@@ -352,7 +373,18 @@ const COMPRA = {
   'Aceites y condimentos': ['Aceite de oliva', 'Vinagre de módena', 'Crema de módena', 'Mahonesa', 'Pimentón dulce', 'Ajo', 'Pepinillos a la vinagreta', 'Caldo de carne']
 };
 
-const checkedItems = new Set();
+const STORAGE_KEY = 'dieta_hilario_compra';
+
+function loadChecked() {
+  try { return new Set(JSON.parse(localStorage.getItem(STORAGE_KEY)) || []); }
+  catch(e) { return new Set(); }
+}
+
+function saveChecked(set) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify([...set])); } catch(e) {}
+}
+
+const checkedItems = loadChecked();
 
 function getAllItems() {
   return Object.values(COMPRA).flat();
@@ -471,8 +503,9 @@ function buildCompra() {
     `<div class="compra-cat"><div class="cat-title">${cat}</div>` +
     items.map(item => {
       const key = item.replace(/[\s()\/]/g, '_');
-      return `<div class="compra-item" id="ci_${key}" onclick="toggleItem('${item}','${key}')">
-        <div class="check" id="ck_${key}"></div>
+      const isDone = checkedItems.has(item);
+      return `<div class="compra-item${isDone ? ' done' : ''}" id="ci_${key}" onclick="toggleItem('${item}','${key}')">
+        <div class="check${isDone ? ' checked' : ''}" id="ck_${key}">${isDone ? '✓' : ''}</div>
         <span>${item}</span>
       </div>`;
     }).join('') + '</div>'
@@ -494,14 +527,63 @@ function toggleItem(item, key) {
     ck.classList.add('checked');
     ck.textContent = '✓';
   }
+  saveChecked(checkedItems);
   updateProgress();
 }
 
 function resetCompra() {
   checkedItems.clear();
+  saveChecked(checkedItems);
   document.querySelectorAll('.compra-item').forEach(el => el.classList.remove('done'));
   document.querySelectorAll('.check').forEach(el => { el.classList.remove('checked'); el.textContent = ''; });
   updateProgress();
+}
+
+
+function printCompra() {
+  const now = new Date().toLocaleDateString('es-ES', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+  let rows = '';
+  Object.entries(COMPRA).forEach(([cat, items]) => {
+    rows += '<div class="cat"><div class="cat-title">' + cat + '</div>';
+    items.forEach(item => {
+      const done = checkedItems.has(item);
+      rows += '<div class="item' + (done ? ' done' : '') + '">'
+            + '<div class="box' + (done ? ' checked' : '') + '">' + (done ? '&#10003;' : '') + '</div>'
+            + '<span>' + item + '</span></div>';
+    });
+    rows += '</div>';
+  });
+  const html = `<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
+<title>Lista de la compra</title>
+<style>
+  body{font-family:'Segoe UI',sans-serif;color:#1a1a1a;padding:2rem;font-size:13px;}
+  h1{font-size:20px;font-weight:600;margin-bottom:4px;}
+  .sub{font-size:12px;color:#666;margin-bottom:1.5rem;border-bottom:1px solid #ccc;padding-bottom:.75rem;}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .cat{break-inside:avoid;margin-bottom:8px;}
+  .cat-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666;border-bottom:.5px solid #ccc;padding-bottom:3px;margin-bottom:5px;}
+  .item{display:flex;align-items:center;gap:7px;padding:3px 0;border-bottom:.5px solid #eee;}
+  .item:last-child{border-bottom:none;}
+  .item.done{text-decoration:line-through;color:#aaa;}
+  .box{width:12px;height:12px;border:1px solid #999;border-radius:2px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;}
+  .box.checked{background:#1D9E75;border-color:#1D9E75;color:white;}
+  .footer{margin-top:1.5rem;text-align:center;font-size:10px;color:#999;border-top:.5px solid #eee;padding-top:.5rem;}
+</style></head><body>
+<h1>Lista de la compra</h1>
+<div class="sub">Hilario Cambero &mdash; Semana 1 &mdash; Nutricionista: Mar&#237;a Rosco Rodr&#237;guez</div>
+<div class="grid">${rows}</div>
+<div class="footer">Impreso el ${now}</div>
+</body></html>`;
+  const blob = new Blob([html], {type: 'text/html'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.target = '_blank';
+  a.rel = 'noopener';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 10000);
 }
 
 buildWeekGrid();
@@ -509,5 +591,7 @@ buildDayButtons();
 buildCompra();
 selectDay('Lunes');
 </script>
+
+<div id="print-area" style="display:none;"></div>
 </body>
 </html>
