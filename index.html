@@ -226,7 +226,7 @@ header {
 
   <div id="view-compra" class="view">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
-      <div class="progress-label" id="progressLabel">0 de 0 artículos marcados</div>
+      <div><div class="progress-label" id="progressLabel">0 de 0 artículos marcados</div><div id="syncStatus" style="font-size:10px;color:#1D9E75;margin-top:2px;">&#9679; Sincronizado con la nube</div></div>
       <div style="display:flex;gap:10px;align-items:center;">
         <button onclick="printCompra()" style="font-size:11px;color:var(--green-dark);background:var(--green-light);border:0.5px solid var(--green-mid);border-radius:20px;padding:4px 12px;cursor:pointer;font-weight:500;">🖨️ Imprimir</button>
         <button onclick="resetCompra()" style="font-size:11px;color:var(--text3);background:none;border:none;cursor:pointer;">Reiniciar</button>
@@ -237,6 +237,8 @@ header {
   </div>
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 <script>
 const DAYS = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
 const MEAL_LABELS = { desayuno:'Desayuno', media_manana:'Media mañana', almuerzo:'Almuerzo', merienda:'Merienda', cena:'Cena' };
@@ -373,18 +375,42 @@ const COMPRA = {
   'Aceites y condimentos': ['Aceite de oliva', 'Vinagre de módena', 'Crema de módena', 'Mahonesa', 'Pimentón dulce', 'Ajo', 'Pepinillos a la vinagreta', 'Caldo de carne']
 };
 
-const STORAGE_KEY = 'dieta_hilario_compra';
+// Firebase config
+const firebaseConfig = {
+  apiKey: "AIzaSyA7Q7jniveEqu6_HkJoSvry8JP8Wg49Z84",
+  authDomain: "dieta-hilario-2ecbd.firebaseapp.com",
+  databaseURL: "https://dieta-hilario-2ecbd-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "dieta-hilario-2ecbd",
+  storageBucket: "dieta-hilario-2ecbd.firebasestorage.app",
+  messagingSenderId: "145044988123",
+  appId: "1:145044988123:web:705ee47c673ceffe9becfe"
+};
 
-function loadChecked() {
-  try { return new Set(JSON.parse(localStorage.getItem(STORAGE_KEY)) || []); }
-  catch(e) { return new Set(); }
+const fbApp = firebase.initializeApp(firebaseConfig);
+const db = fbApp.database();
+const compraRef = db.ref('compra/items');
+
+const checkedItems = new Set();
+
+function saveChecked(itemSet) {
+  const obj = {};
+  getAllItems().forEach(item => { obj[item.replace(/[.#$/\[\]]/g, '_')] = itemSet.has(item); });
+  compraRef.set(obj).catch(e => console.error('Firebase write error:', e));
 }
 
-function saveChecked(set) {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify([...set])); } catch(e) {}
-}
-
-const checkedItems = loadChecked();
+// Listen for changes from any device in real time
+compraRef.on('value', (snapshot) => {
+  const data = snapshot.val();
+  checkedItems.clear();
+  if (data) {
+    getAllItems().forEach(item => {
+      const key = item.replace(/[.#$/\[\]]/g, '_');
+      if (data[key] === true) checkedItems.add(item);
+    });
+  }
+  rebuildCompraUI();
+  updateProgress();
+});
 
 function getAllItems() {
   return Object.values(COMPRA).flat();
@@ -498,7 +524,7 @@ function selectDay(day) {
   document.getElementById('dayDetail').innerHTML = buildDayHTML(day, 'd');
 }
 
-function buildCompra() {
+function rebuildCompraUI() {
   document.getElementById('compraGrid').innerHTML = Object.entries(COMPRA).map(([cat, items]) =>
     `<div class="compra-cat"><div class="cat-title">${cat}</div>` +
     items.map(item => {
@@ -586,9 +612,10 @@ function printCompra() {
   setTimeout(() => URL.revokeObjectURL(url), 10000);
 }
 
+
 buildWeekGrid();
 buildDayButtons();
-buildCompra();
+rebuildCompraUI();
 selectDay('Lunes');
 </script>
 
