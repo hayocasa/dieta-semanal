@@ -3,15 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Planificador de Dieta — Hilario Cambero</title>
+<title>Mis Dietas — Hilario Cambero</title>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
   --bg: #f8f7f4;
   --surface: #ffffff;
-  --surface2: #f2f0eb;
   --border: rgba(0,0,0,0.1);
-  --border2: rgba(0,0,0,0.2);
   --text: #1a1a1a;
   --text2: #5a5a5a;
   --text3: #999;
@@ -19,606 +17,161 @@
   --green-light: #E1F5EE;
   --green-mid: #9FE1CB;
   --green-dark: #0F6E56;
-  --blue: #185FA5;
-  --blue-light: #E6F1FB;
-  --blue-mid: #B5D4F4;
-  --radius: 10px;
-  --radius-lg: 14px;
+  --orange: #E07B39;
+  --orange-light: #FDF0E8;
+  --orange-mid: #F5C4A0;
+  --orange-dark: #9E4E1D;
 }
 body {
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-family: 'Segoe UI', system-ui, sans-serif;
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
-  font-size: 15px;
-  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
 }
 header {
   background: var(--surface);
   border-bottom: 0.5px solid var(--border);
-  padding: 1.25rem 2rem;
+  padding: 1.5rem 2rem;
+  text-align: center;
+}
+.header-title { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+.header-sub { font-size: 13px; color: var(--text3); }
+.header-nutri { font-size: 12px; color: var(--green-dark); margin-top: 6px; }
+
+.container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  flex: 1;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  position: sticky;
-  top: 0;
-  z-index: 100;
 }
-.header-title { font-size: 17px; font-weight: 600; color: var(--text); }
-.header-sub { font-size: 12px; color: var(--text3); margin-top: 1px; }
-.badge-nutri { font-size: 11px; background: var(--green-light); color: var(--green-dark); border-radius: 20px; padding: 4px 12px; }
 
-.container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
+.intro { text-align: center; margin-bottom: 2.5rem; }
+.intro h2 { font-size: 17px; font-weight: 600; margin-bottom: 8px; }
+.intro p { font-size: 14px; color: var(--text2); line-height: 1.6; }
 
-.tabs { display: flex; gap: 6px; margin-bottom: 1.75rem; flex-wrap: wrap; }
-.tab {
-  padding: 9px 18px;
-  border: 0.5px solid var(--border2);
-  border-radius: var(--radius);
-  cursor: pointer;
-  font-size: 14px;
-  background: var(--surface);
-  color: var(--text2);
-  transition: all 0.15s;
-  font-weight: 400;
-}
-.tab.active {
-  background: var(--green);
-  color: white;
-  border-color: var(--green);
-  font-weight: 500;
-}
-.tab:hover:not(.active) { background: var(--surface2); }
+.cards { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; }
 
-.view { display: none; }
-.view.active { display: block; }
-
-/* WEEK GRID */
-.day-grid { display: grid; grid-template-columns: repeat(7, minmax(0,1fr)); gap: 8px; margin-bottom: 1rem; }
-.day-card {
-  border: 0.5px solid var(--border);
-  border-radius: var(--radius);
-  padding: 10px 8px;
-  cursor: pointer;
-  transition: all 0.15s;
-  background: var(--surface);
-}
-.day-card:hover { border-color: var(--green); }
-.day-card.selected { border-color: var(--green); background: var(--green-light); }
-.day-name { font-size: 11px; font-weight: 600; margin-bottom: 6px; color: var(--text2); letter-spacing: 0.05em; }
-.day-card.selected .day-name { color: var(--green-dark); }
-.meal-mini { font-size: 10px; color: var(--text3); line-height: 1.4; }
-.meal-mini span { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.meal-mini .mini-label { font-size: 9px; color: var(--text3); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.04em; }
-
-/* DAY DETAIL */
-.day-detail {
+.card {
   background: var(--surface);
   border: 0.5px solid var(--border);
-  border-radius: var(--radius-lg);
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+.card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+
+.card-mes1 { border-top: 3px solid var(--green); }
+.card-mes2 { border-top: 3px solid var(--orange); }
+
+.card-icon { font-size: 36px; }
+.card-badge {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; border-radius: 20px; padding: 3px 10px;
+}
+.badge-mes1 { background: var(--green-light); color: var(--green-dark); }
+.badge-mes2 { background: var(--orange-light); color: var(--orange-dark); }
+
+.card-title { font-size: 18px; font-weight: 700; }
+.card-desc { font-size: 13px; color: var(--text2); line-height: 1.5; }
+
+.card-features { list-style: none; width: 100%; text-align: left; }
+.card-features li {
+  font-size: 12px; color: var(--text2);
+  padding: 4px 0;
+  border-bottom: 0.5px solid var(--border);
+  display: flex; align-items: center; gap: 6px;
+}
+.card-features li:last-child { border-bottom: none; }
+
+.card-btn {
+  margin-top: 8px;
+  padding: 10px 24px;
+  border-radius: 20px;
+  font-size: 14px; font-weight: 600;
+  width: 100%;
+  border: none; cursor: pointer;
+  transition: opacity 0.15s;
+}
+.card-btn:hover { opacity: 0.85; }
+.btn-mes1 { background: var(--green); color: white; }
+.btn-mes2 { background: var(--orange); color: white; }
+
+.footer {
+  text-align: center;
   padding: 1.5rem;
-  margin-top: 1rem;
-}
-.day-title { font-size: 20px; font-weight: 600; margin-bottom: 1.25rem; color: var(--green-dark); }
-
-.meal-block { margin-bottom: 10px; border: 0.5px solid var(--border); border-radius: var(--radius); overflow: hidden; }
-.meal-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 11px 14px; cursor: pointer;
-  background: var(--surface2);
-  user-select: none;
-  transition: background 0.1s;
-}
-.meal-header:hover { background: #eae8e2; }
-.meal-label { font-size: 13px; font-weight: 600; }
-.meal-time { font-size: 11px; color: var(--text3); margin-top: 1px; }
-.meal-body { display: none; padding: 14px; border-top: 0.5px solid var(--border); }
-.meal-body.open { display: block; }
-.plato { margin-bottom: 14px; }
-.plato:last-child { margin-bottom: 0; }
-.plato-name { font-size: 13px; font-weight: 600; margin-bottom: 5px; }
-.ingred-list { font-size: 12px; color: var(--text2); line-height: 1.7; margin-bottom: 6px; }
-.ingred-list::before { content: "🧂 "; }
-.elab {
-  font-size: 12px; color: var(--text2); border-left: 2px solid var(--green-mid);
-  padding-left: 10px; line-height: 1.7; margin-bottom: 8px; font-style: italic;
-}
-.elab-label { font-size: 10px; font-weight: 600; color: var(--green); margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.05em; font-style: normal; }
-.video-link {
-  display: inline-flex; align-items: center; gap: 5px;
-  font-size: 11px; color: var(--blue); text-decoration: none;
-  border: 0.5px solid var(--blue-mid); border-radius: 20px;
-  padding: 4px 10px; background: var(--blue-light);
-  transition: background 0.15s;
-}
-.video-link:hover { background: var(--blue-mid); }
-.chevron { font-size: 14px; color: var(--text3); transition: transform 0.2s; line-height: 1; }
-.chevron.open { transform: rotate(180deg); }
-
-/* DAILY INGREDIENTS */
-.ingred-day-section {
-  background: var(--green-light);
-  border: 0.5px solid var(--green-mid);
-  border-radius: var(--radius);
-  padding: 14px;
-  margin-top: 14px;
-}
-.ingred-day-title { font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--green-dark); }
-.ingred-tag {
-  display: inline-block; font-size: 11px;
-  background: white; color: var(--green-dark);
-  border: 0.5px solid var(--green-mid);
-  border-radius: 20px; padding: 3px 10px; margin: 3px;
+  font-size: 11px;
+  color: var(--text3);
+  border-top: 0.5px solid var(--border);
 }
 
-/* DAY BUTTONS */
-.day-buttons { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.25rem; }
-.day-btn {
-  padding: 8px 14px; border: 0.5px solid var(--border2); border-radius: var(--radius);
-  cursor: pointer; font-size: 13px; background: var(--surface); color: var(--text2); transition: all 0.15s;
-}
-.day-btn.active { background: var(--green); color: white; border-color: var(--green); font-weight: 500; }
-.day-btn:hover:not(.active) { background: var(--surface2); }
-
-/* COMPRA */
-.compra-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
-.compra-cat { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 14px; }
-.cat-title { font-size: 11px; font-weight: 700; margin-bottom: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; }
-.compra-item { display: flex; align-items: center; gap: 9px; font-size: 13px; padding: 5px 0; border-bottom: 0.5px solid var(--border); cursor: pointer; transition: color 0.1s; }
-.compra-item:last-child { border-bottom: none; }
-.compra-item.done { text-decoration: line-through; color: var(--text3); }
-.check {
-  width: 16px; height: 16px; border: 0.5px solid var(--border2); border-radius: 4px;
-  flex-shrink: 0; display: flex; align-items: center; justify-content: center;
-  font-size: 10px; transition: all 0.15s;
-}
-.check.checked { background: var(--green); border-color: var(--green); color: white; }
-.progress-bar-wrap { background: var(--surface2); border-radius: 20px; height: 6px; margin-bottom: 1.5rem; overflow: hidden; }
-.progress-bar { background: var(--green); height: 6px; border-radius: 20px; transition: width 0.3s; }
-.progress-label { font-size: 12px; color: var(--text3); margin-bottom: 6px; }
-
-@media print {
-  body * { visibility: hidden; }
-  #print-area, #print-area * { visibility: visible; }
-  #print-area { position: absolute; top: 0; left: 0; width: 100%; font-family: 'Segoe UI', system-ui, sans-serif; color: #1a1a1a; }
-  .print-header { text-align: center; margin-bottom: 1.5rem; border-bottom: 1px solid #ccc; padding-bottom: 0.75rem; }
-  .print-header h1 { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
-  .print-header p { font-size: 12px; color: #666; }
-  .print-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-  .print-cat { break-inside: avoid; margin-bottom: 12px; }
-  .print-cat-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #666; margin-bottom: 6px; border-bottom: 0.5px solid #ccc; padding-bottom: 3px; }
-  .print-item { display: flex; align-items: center; gap: 8px; font-size: 12px; padding: 3px 0; border-bottom: 0.5px solid #eee; }
-  .print-item:last-child { border-bottom: none; }
-  .print-item.done { text-decoration: line-through; color: #aaa; }
-  .print-box { width: 12px; height: 12px; border: 1px solid #999; border-radius: 2px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 9px; }
-  .print-box.checked { background: #1D9E75; border-color: #1D9E75; color: white; }
-  .print-footer { margin-top: 1.5rem; text-align: center; font-size: 10px; color: #999; border-top: 0.5px solid #eee; padding-top: 0.5rem; }
+@media (max-width: 500px) {
+  .cards { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body>
 
 <header>
-  <div>
-    <div class="header-title">Planificador de Dieta</div>
-    <div class="header-sub">Hilario Cambero — Semana 1</div>
-  </div>
-  <div class="badge-nutri">Nutricionista: María Rosco Rodríguez</div>
+  <div class="header-title">🥗 Mis Planificadores de Dieta</div>
+  <div class="header-sub">Hilario Cambero</div>
+  <div class="header-nutri">Nutricionista: María Rosco Rodríguez · 625 712 125</div>
 </header>
 
 <div class="container">
-  <div class="tabs">
-    <div class="tab active" onclick="showView('semanal')">Vista semanal</div>
-    <div class="tab" onclick="showView('diaria')">Vista diaria</div>
-    <div class="tab" onclick="showView('compra')">Lista de la compra</div>
+  <div class="intro">
+    <h2>Elige tu dieta activa</h2>
+    <p>Accede al planificador semanal, recetas detalladas y lista de la compra de cada mes.</p>
   </div>
 
-  <div id="view-semanal" class="view active">
-    <div class="day-grid" id="weekGrid"></div>
-    <div style="font-size:12px;color:var(--text3);margin-bottom:1rem;">Haz clic en un día para ver el menú completo</div>
-    <div id="weekDayDetail"></div>
-  </div>
+  <div class="cards">
+    <a class="card card-mes1" href="planificador_dieta_hilario.html">
+      <div class="card-icon">🌿</div>
+      <div class="card-badge badge-mes1">Mes 1</div>
+      <div class="card-title">Dieta Mes 1</div>
+      <div class="card-desc">Menú semanal con cremas, bacalao, arroz con pollo, salmón y ensaladas variadas.</div>
+      <ul class="card-features">
+        <li>📅 Vista semanal y diaria</li>
+        <li>🧂 Ingredientes y elaboración</li>
+        <li>▶ Vídeos de recetas</li>
+        <li>🛒 Lista de la compra sincronizada</li>
+        <li>🖨️ Impresión de lista</li>
+      </ul>
+      <button class="card-btn btn-mes1">Abrir Mes 1</button>
+    </a>
 
-  <div id="view-diaria" class="view">
-    <div class="day-buttons" id="dayButtons"></div>
-    <div id="dayDetail"></div>
-  </div>
-
-  <div id="view-compra" class="view">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
-      <div><div class="progress-label" id="progressLabel">0 de 0 artículos marcados</div><div id="syncStatus" style="font-size:10px;color:#1D9E75;margin-top:2px;">&#9679; Sincronizado con la nube</div></div>
-      <div style="display:flex;gap:10px;align-items:center;">
-        <button onclick="printCompra()" style="font-size:11px;color:var(--green-dark);background:var(--green-light);border:0.5px solid var(--green-mid);border-radius:20px;padding:4px 12px;cursor:pointer;font-weight:500;">🖨️ Imprimir</button>
-        <button onclick="resetCompra()" style="font-size:11px;color:var(--text3);background:none;border:none;cursor:pointer;">Reiniciar</button>
-      </div>
-    </div>
-    <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
-    <div class="compra-grid" id="compraGrid"></div>
+    <a class="card card-mes2" href="planificador_dieta_mes2.html">
+      <div class="card-icon">🍊</div>
+      <div class="card-badge badge-mes2">Mes 2</div>
+      <div class="card-title">Dieta Mes 2</div>
+      <div class="card-desc">Menú renovado con solomillo, ensaladas de pasta, parrilladas, pizza y macedonias de yogur.</div>
+      <ul class="card-features">
+        <li>📅 Vista semanal y diaria</li>
+        <li>🧂 Ingredientes y elaboración</li>
+        <li>▶ Vídeos de recetas</li>
+        <li>🛒 Lista de la compra independiente</li>
+        <li>🖨️ Impresión de lista</li>
+      </ul>
+      <button class="card-btn btn-mes2">Abrir Mes 2</button>
+    </a>
   </div>
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
-<script>
-const DAYS = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
-const MEAL_LABELS = { desayuno:'Desayuno', media_manana:'Media mañana', almuerzo:'Almuerzo', merienda:'Merienda', cena:'Cena' };
-const MEAL_TIMES = { desayuno:'07:30', media_manana:'11:00', almuerzo:'14:00', merienda:'17:30', cena:'21:00' };
+<div class="footer">
+  Planificador de dieta personalizado · Hilario Cambero · María Rosco Rodríguez — Nutrición y Dietoterapia
+</div>
 
-const MEALS = {
-  Lunes: {
-    desayuno: [
-      { nombre:'Tostadas de aceite de oliva y tomate', ingredientes:'1 tomate (100g), 1 rebanada pan integral (50g), 1 cda. aceite de oliva (10g)', elaboracion:'Tostar el pan, frotar el tomate y añadir el aceite de oliva.', video:'https://www.youtube.com/results?search_query=tostadas+aceite+oliva+tomate+receta' },
-      { nombre:'Café con leche desnatada ×2', ingredientes:'2 tazas café con leche desnatada (200g c/u)', elaboracion:null, video:null }
-    ],
-    media_manana: [{ nombre:'Café con leche desnatada', ingredientes:'1 taza café con leche desnatada (200g)', elaboracion:null, video:null }],
-    almuerzo: [
-      { nombre:'Crema de calabacín', ingredientes:'1 calabacín (200g), ½ taza caldo carne (100g), ½ patata (60g), ½ cebolla (30g), 1 porción queso (20g)', elaboracion:'Hervir el calabacín y las patatas. Sofreír la cebolla. Añadir el queso y triturar todo. Servir frío o caliente.', video:'https://www.youtube.com/results?search_query=crema+de+calabacin+receta+facil' },
-      { nombre:'Bacalao entomatado', ingredientes:'2½ tomates (290g), 1 filete bacalao fresco (150g), cebolla (20g), 1 cda. aceite oliva (10g), 2½ ajos (5g)', elaboracion:'Calentar el aceite y sofreír la cebolla. Añadir el tomate, sal y orégano. Cocer 10 min. Incorporar el bacalao y dejar reducir a fuego lento.', video:'https://www.youtube.com/results?search_query=bacalao+entomatado+receta' },
-      { nombre:'Pan + Fruta', ingredientes:'½ baguette (40g), 1 fruta mediana (150g)', elaboracion:null, video:null }
-    ],
-    merienda: [{ nombre:'Fruta + Café', ingredientes:'1 fruta mediana (150g), 1 taza café con leche desnatada (200g)', elaboracion:null, video:null }],
-    cena: [
-      { nombre:'Pan de pita de tortilla de jamón y queso', ingredientes:'1 tomate (100g), 1 pan de pita (70g), 1 huevo (60g), queso brie (30g), jamón york (20g), rúcula (20g), aceite de oliva (5g)', elaboracion:'Preparar una tortilla con el huevo. Calentar el pan de pita y rellenar con la tortilla, el jamón, el queso, la rúcula y el tomate.', video:'https://www.youtube.com/results?search_query=pan+de+pita+relleno+tortilla+jamon' },
-      { nombre:'Yogur desnatado + Cerveza rubia', ingredientes:'1 yogur desnatado (120g), 1½ caña cerveza rubia (250g)', elaboracion:null, video:null }
-    ]
-  },
-  Martes: {
-    desayuno: [
-      { nombre:'Tostada de jamón ibérico con tomate', ingredientes:'1 rebanada pan integral (50g), ½ tomate (50g), 2 lonchas jamón ibérico (40g), 1 cda. aceite oliva (10g)', elaboracion:'Tostar el pan, frotar el tomate y añadir el jamón ibérico y el aceite.', video:'https://www.youtube.com/results?search_query=tostada+jamon+iberico+tomate' },
-      { nombre:'Café con leche desnatada ×2', ingredientes:'2 tazas café con leche desnatada (200g c/u)', elaboracion:null, video:null }
-    ],
-    media_manana: [{ nombre:'Café con leche desnatada', ingredientes:'1 taza café con leche desnatada (200g)', elaboracion:null, video:null }],
-    almuerzo: [
-      { nombre:'Arroz con pollo', ingredientes:'½ pechuga pollo (100g), 1 tomate (100g), 1 taza arroz (80g), ½ pimiento verde (50g), ½ pimiento rojo (50g), cebolla (20g), 1 cda. aceite oliva (10g), pizca ajo', elaboracion:'Calentar aceite, sofreír verduras y tomate. Trocear y salpimentar el pollo, añadir y mezclar. Agregar el arroz, caldo con azafrán y hervir. Cocer 15-20 min y reposar 10 min.', video:'https://www.youtube.com/results?search_query=arroz+con+pollo+receta+tradicional' },
-      { nombre:'Pan + Fruta', ingredientes:'½ baguette (40g), 1 fruta mediana (150g)', elaboracion:null, video:null }
-    ],
-    merienda: [{ nombre:'Fruta + Café', ingredientes:'1 fruta mediana (150g), 1 taza café con leche desnatada (200g)', elaboracion:null, video:null }],
-    cena: [
-      { nombre:'Ensalada de rulo de cabra y jamón ibérico', ingredientes:'10 tomates cherry (100g), brotes espinacas y canónigos (70g), pimiento asado (50g), ½ cebolla (50g), queso rulo de cabra (40g), 2 lonchas jamón ibérico (40g), 1 cda. vinagre módena, 1 cda. aceite oliva', elaboracion:'Mezclar los brotes, tomates cherry, queso rulo, jamón, pimiento asado y cebolla. Aliñar al gusto. Nota: cambiar espinacas por lechuga si se prefiere.', video:'https://www.youtube.com/results?search_query=ensalada+rulo+cabra+jamon+iberico' },
-      { nombre:'Pan + Yogur + Cerveza', ingredientes:'½ baguette (40g), 1 yogur desnatado (120g), 1½ caña cerveza (250g)', elaboracion:null, video:null }
-    ]
-  },
-  Miércoles: {
-    desayuno: [
-      { nombre:'Tostadas de aceite de oliva y tomate', ingredientes:'1 tomate (100g), 1 rebanada pan integral (50g), 1 cda. aceite de oliva (10g)', elaboracion:'Tostar el pan, frotar el tomate y añadir el aceite de oliva.', video:'https://www.youtube.com/results?search_query=tostadas+aceite+oliva+tomate+receta' },
-      { nombre:'Café con leche desnatada ×2', ingredientes:'2 tazas café con leche desnatada (200g c/u)', elaboracion:null, video:null }
-    ],
-    media_manana: [{ nombre:'Café con leche desnatada', ingredientes:'1 taza café con leche desnatada (200g)', elaboracion:null, video:null }],
-    almuerzo: [
-      { nombre:'Ensalada mixta con atún', ingredientes:'½ ración brotes espinacas y canónigos (70g), 1 lata atún en aceite (60g), maíz cocido (50g), ½ zanahoria (50g), 1½ remolacha (50g), queso mozzarella (40g), cebolla (20g), vinagre módena', elaboracion:'Mezclar todos los ingredientes y aliñar con vinagre de módena al gusto.', video:'https://www.youtube.com/results?search_query=ensalada+mixta+atun+receta' },
-      { nombre:'Pechuga de pollo a la plancha', ingredientes:'1 filete pechuga (150g)', elaboracion:'Cocinar a la plancha sin piel. Se puede sustituir por muslo.', video:'https://www.youtube.com/results?search_query=pechuga+pollo+plancha+receta' },
-      { nombre:'Pan + Fruta', ingredientes:'½ baguette (40g), 1 fruta mediana (150g)', elaboracion:null, video:null }
-    ],
-    merienda: [{ nombre:'Fruta + Café', ingredientes:'1 fruta mediana (150g), 1 taza café con leche desnatada (200g)', elaboracion:null, video:null }],
-    cena: [
-      { nombre:'Pan de pita con salmón ahumado y queso feta', ingredientes:'½ filete salmón ahumado (80g), 1 pan de pita (70g), ½ aguacate (50g), 5 tomates cherry (50g), queso feta (30g), rúcula (10g), crema de módena (5g)', elaboracion:'Calentar el pan de pita y rellenar con el salmón, aguacate, queso feta, tomates cherry y rúcula.', video:'https://www.youtube.com/results?search_query=pan+pita+salmon+ahumado+queso+feta' },
-      { nombre:'Yogur desnatado + Cerveza rubia', ingredientes:'1 yogur desnatado (120g), 1½ caña cerveza (250g)', elaboracion:null, video:null }
-    ]
-  },
-  Jueves: {
-    desayuno: [
-      { nombre:'Tostada de jamón ibérico con tomate', ingredientes:'1 rebanada pan integral (50g), ½ tomate (50g), 2 lonchas jamón ibérico (40g), 1 cda. aceite oliva (10g)', elaboracion:'Tostar el pan, frotar el tomate y añadir el jamón ibérico y el aceite.', video:'https://www.youtube.com/results?search_query=tostada+jamon+iberico+tomate' },
-      { nombre:'Café con leche desnatada ×2', ingredientes:'2 tazas café con leche desnatada (200g c/u)', elaboracion:null, video:null }
-    ],
-    media_manana: [{ nombre:'Café con leche desnatada', ingredientes:'1 taza café con leche desnatada (200g)', elaboracion:null, video:null }],
-    almuerzo: [
-      { nombre:'Solomillo de cerdo con verduras y salsa de queso', ingredientes:'1½ filete cerdo-lomo (150g), 1 tomate (140g), ½ calabacín (100g), 1 pimiento rojo (100g), 1 cebolla (100g), ½ vaso leche desnatada (50g), queso roquefort (40g), 1 cda. aceite oliva (10g)', elaboracion:'Hacer el solomillo y trocear las verduras. Elaborar la salsa de queso con leche desnatada y queso azul. Verter sobre la carne y las verduras.', video:'https://www.youtube.com/results?search_query=solomillo+cerdo+verduras+salsa+queso' },
-      { nombre:'Pan + Fruta', ingredientes:'½ baguette (40g), 1 fruta mediana (150g)', elaboracion:null, video:null }
-    ],
-    merienda: [{ nombre:'Fruta + Café', ingredientes:'1 fruta mediana (150g), 1 taza café con leche desnatada (200g)', elaboracion:null, video:null }],
-    cena: [
-      { nombre:'Hamburguesa completa con rúcula y rulo de cabra', ingredientes:'1 hamburguesa (100g), 2 rebanadas pan hamburguesa (100g), ½ tomate (50g), queso rulo de cabra (20g), pepinillos (10g), rúcula (10g), cebolla (10g)', elaboracion:'Cocinar la hamburguesa a la plancha. Montar con el pan, rúcula, tomate, rulo de cabra y pepinillos.', video:'https://www.youtube.com/results?search_query=hamburguesa+casera+rucula+queso+cabra' },
-      { nombre:'Yogur desnatado + Cerveza', ingredientes:'1 yogur desnatado (120g), 1½ caña cerveza (250g)', elaboracion:null, video:null }
-    ]
-  },
-  Viernes: {
-    desayuno: [
-      { nombre:'Tostadas de aceite de oliva y tomate', ingredientes:'1 tomate (100g), 1 rebanada pan integral (50g), 1 cda. aceite de oliva (10g)', elaboracion:'Tostar el pan, frotar el tomate y añadir el aceite de oliva.', video:'https://www.youtube.com/results?search_query=tostadas+aceite+oliva+tomate+receta' },
-      { nombre:'Café con leche desnatada ×2', ingredientes:'2 tazas café con leche desnatada (200g c/u)', elaboracion:null, video:null }
-    ],
-    media_manana: [{ nombre:'Café con leche desnatada', ingredientes:'1 taza café con leche desnatada (200g)', elaboracion:null, video:null }],
-    almuerzo: [
-      { nombre:'Ensalada de garbanzos con salmón y aguacate', ingredientes:'1 tomate (140g), ½ aguacate (100g), 1½ loncha salmón ahumado (100g), garbanzos cocidos (80g), ½ pimiento verde (50g), ½ pimiento rojo (50g), ½ cebolla (50g), 1 cda. aceite oliva, crema módena (10g)', elaboracion:'Mezclar todos los ingredientes y aliñar con aceite y crema de módena.', video:'https://www.youtube.com/results?search_query=ensalada+garbanzos+salmon+aguacate' },
-      { nombre:'Pan + Fruta', ingredientes:'½ baguette (40g), 1 fruta mediana (150g)', elaboracion:null, video:null }
-    ],
-    merienda: [{ nombre:'Fruta + Café', ingredientes:'1 fruta mediana (150g), 1 taza café con leche desnatada (200g)', elaboracion:null, video:null }],
-    cena: [
-      { nombre:'Crema de verduras', ingredientes:'½ patata (60g), ½ zanahoria (60g), calabaza (40g), apio (30g), puerros (30g), cebolla (30g), queso en porciones (20g)', elaboracion:'Hervir todos los ingredientes y pasar por la batidora hasta obtener una crema homogénea.', video:'https://www.youtube.com/results?search_query=crema+de+verduras+receta+facil' },
-      { nombre:'Tosta de lacón a la gallega', ingredientes:'1 tosta pan integral (70g), lacón (50g), ½ tomate (50g), queso philadelphia light (10g), rúcula (10g), aceite oliva (5g), pimentón dulce', elaboracion:'Untar el pan con el queso, poner rodajas de tomate, rúcula y el lacón. Rociar con aceite y pimentón dulce.', video:'https://www.youtube.com/results?search_query=tosta+lacon+gallega+receta' },
-      { nombre:'Yogur desnatado + Cerveza', ingredientes:'1 yogur desnatado (120g), 1½ caña cerveza (250g)', elaboracion:null, video:null }
-    ]
-  },
-  Sábado: {
-    desayuno: [
-      { nombre:'Tostada de jamón ibérico con tomate', ingredientes:'1 rebanada pan integral (50g), ½ tomate (50g), 2 lonchas jamón ibérico (40g), 1 cda. aceite oliva (10g)', elaboracion:'Tostar el pan, frotar el tomate y añadir el jamón ibérico y el aceite.', video:'https://www.youtube.com/results?search_query=tostada+jamon+iberico+tomate' },
-      { nombre:'Café con leche desnatada ×2', ingredientes:'2 tazas café con leche desnatada (200g c/u)', elaboracion:null, video:null }
-    ],
-    media_manana: [{ nombre:'Café con leche desnatada', ingredientes:'1 taza café con leche desnatada (200g)', elaboracion:null, video:null }],
-    almuerzo: [
-      { nombre:'Salmorejo con aguacate, jamón y huevo', ingredientes:'2½ tomates (290g), 2 huevos (120g), ½ aguacate (100g), 1½ loncha jamón ibérico (30g), pizca pan integral (10g), 1 cda. aceite oliva (10g), pizca ajo', elaboracion:'Triturar los tomates con el ajo, pan, aceite y sal hasta obtener textura cremosa. Servir frío con los tropezones de huevo, jamón y aguacate.', video:'https://www.youtube.com/results?search_query=salmorejo+aguacate+jamon+huevo' },
-      { nombre:'Pan + Fruta', ingredientes:'½ baguette (40g), 1 fruta mediana (150g)', elaboracion:null, video:null }
-    ],
-    merienda: [{ nombre:'Fruta + Café', ingredientes:'1 fruta mediana (150g), 1 taza café con leche desnatada (200g)', elaboracion:null, video:null }],
-    cena: [
-      { nombre:'Ensalada de pollo con queso feta y mahonesa', ingredientes:'½ pechuga pollo (100g), ½ manzana (100g), 1 tomate (100g), brotes tiernos (70g), queso feta (30g), mahonesa (10g), 1 cda. vinagre módena, 1 cda. aceite oliva', elaboracion:'Cocinar el pollo a la plancha y trocear. Mezclar con el resto de ingredientes y aliñar con mahonesa, vinagre y aceite.', video:'https://www.youtube.com/results?search_query=ensalada+pollo+queso+feta+mahonesa' },
-      { nombre:'Pan + Yogur + Cerveza', ingredientes:'½ baguette (40g), 1 yogur desnatado (120g), 1½ caña cerveza (250g)', elaboracion:null, video:null }
-    ]
-  },
-  Domingo: {
-    desayuno: [
-      { nombre:'Tostadas de aceite de oliva y tomate', ingredientes:'1 tomate (100g), 1 rebanada pan integral (50g), 1 cda. aceite de oliva (10g)', elaboracion:'Tostar el pan, frotar el tomate y añadir el aceite de oliva.', video:'https://www.youtube.com/results?search_query=tostadas+aceite+oliva+tomate+receta' },
-      { nombre:'Café con leche desnatada ×2', ingredientes:'2 tazas café con leche desnatada (200g c/u)', elaboracion:null, video:null }
-    ],
-    media_manana: [{ nombre:'Café con leche desnatada', ingredientes:'1 taza café con leche desnatada (200g)', elaboracion:null, video:null }],
-    almuerzo: [
-      { nombre:'Pisto manchego', ingredientes:'½ calabacín (100g), 1 tomate (100g), ½ berenjena (100g), ½ pimiento rojo (60g), ½ cebolla (40g), 1 cda. aceite oliva (10g), pizca ajo', elaboracion:'Sofreír todas las verduras en aceite con ajo. Añadir el tomate y cocer a fuego lento hasta que todo esté tierno.', video:'https://www.youtube.com/results?search_query=pisto+manchego+receta+tradicional' },
-      { nombre:'Salmón a la plancha', ingredientes:'1 filete salmón (150g), 1 cdta. aceite oliva (2g)', elaboracion:'Calentar la plancha bien caliente y cocinar el salmón al punto deseado.', video:'https://www.youtube.com/results?search_query=salmon+a+la+plancha+receta' },
-      { nombre:'Pan + Fruta', ingredientes:'½ baguette (40g), 1 fruta mediana (150g)', elaboracion:null, video:null }
-    ],
-    merienda: [{ nombre:'Fruta + Café', ingredientes:'1 fruta mediana (150g), 1 taza café con leche desnatada (200g)', elaboracion:null, video:null }],
-    cena: [
-      { nombre:'Ensalada caprese con anchoas', ingredientes:'2½ tomates (290g), 2½ porciones queso mozzarella (100g), ½ aguacate (100g), 1 lata anchoas en aceite (20g), cebolla (20g), vinagre módena (5g), aceite oliva (5g)', elaboracion:'Disponer rodajas de tomate y mozzarella alternadas. Añadir el aguacate, las anchoas y la cebolla. Condimentar con albahaca, vinagre y aceite.', video:'https://www.youtube.com/results?search_query=ensalada+caprese+anchoas+receta' },
-      { nombre:'Pan + Yogur + Cerveza', ingredientes:'½ baguette (40g), 1 yogur desnatado (120g), 1½ caña cerveza (250g)', elaboracion:null, video:null }
-    ]
-  }
-};
-
-const COMPRA = {
-  'Frutas y verduras': ['Tomate', 'Tomate cherry', 'Calabacín', 'Pimiento rojo', 'Pimiento verde', 'Cebolla', 'Zanahoria', 'Berenjena', 'Aguacate', 'Manzana', 'Patata', 'Calabaza', 'Puerros', 'Apio', 'Remolacha', 'Rúcula', 'Brotes espinacas y canónigos', 'Brotes tiernos', 'Pimiento asado'],
-  'Carnes y embutidos': ['Pechuga de pollo', 'Cerdo-lomo', 'Hamburguesa', 'Jamón ibérico', 'Jamón de york (cocido)', 'Lacón'],
-  'Pescados': ['Bacalao fresco', 'Salmón fresco', 'Salmón ahumado', 'Atún en aceite (lata)', 'Anchoas en aceite (lata)'],
-  'Lácteos y quesos': ['Leche desnatada', 'Yogur desnatado', 'Queso en porciones', 'Queso Philadelphia light', 'Queso rulo de cabra', 'Queso mozzarella', 'Queso brie', 'Queso roquefort', 'Queso feta'],
-  'Panadería y cereales': ['Pan integral (rebanadas)', 'Pan de pita', 'Pan de hamburguesa', 'Baguette', 'Arroz', 'Maíz cocido'],
-  'Legumbres': ['Garbanzos cocidos'],
-  'Huevos': ['Huevos (docena)'],
-  'Bebidas': ['Cerveza rubia'],
-  'Aceites y condimentos': ['Aceite de oliva', 'Vinagre de módena', 'Crema de módena', 'Mahonesa', 'Pimentón dulce', 'Ajo', 'Pepinillos a la vinagreta', 'Caldo de carne']
-};
-
-// Firebase config
-const firebaseConfig = {
-  apiKey: "AIzaSyA7Q7jniveEqu6_HkJoSvry8JP8Wg49Z84",
-  authDomain: "dieta-hilario-2ecbd.firebaseapp.com",
-  databaseURL: "https://dieta-hilario-2ecbd-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "dieta-hilario-2ecbd",
-  storageBucket: "dieta-hilario-2ecbd.firebasestorage.app",
-  messagingSenderId: "145044988123",
-  appId: "1:145044988123:web:705ee47c673ceffe9becfe"
-};
-
-const fbApp = firebase.initializeApp(firebaseConfig);
-const db = fbApp.database();
-const compraRef = db.ref('compra/items');
-
-const checkedItems = new Set();
-
-function saveChecked(itemSet) {
-  const obj = {};
-  getAllItems().forEach(item => { obj[item.replace(/[.#$/\[\]]/g, '_')] = itemSet.has(item); });
-  compraRef.set(obj).catch(e => console.error('Firebase write error:', e));
-}
-
-// Listen for changes from any device in real time
-compraRef.on('value', (snapshot) => {
-  const data = snapshot.val();
-  checkedItems.clear();
-  if (data) {
-    getAllItems().forEach(item => {
-      const key = item.replace(/[.#$/\[\]]/g, '_');
-      if (data[key] === true) checkedItems.add(item);
-    });
-  }
-  rebuildCompraUI();
-  updateProgress();
-});
-
-function getAllItems() {
-  return Object.values(COMPRA).flat();
-}
-
-function updateProgress() {
-  const all = getAllItems();
-  const done = checkedItems.size;
-  const pct = all.length ? Math.round((done / all.length) * 100) : 0;
-  document.getElementById('progressBar').style.width = pct + '%';
-  document.getElementById('progressLabel').textContent = done + ' de ' + all.length + ' artículos marcados';
-}
-
-function showView(v) {
-  document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
-  document.getElementById('view-' + v).classList.add('active');
-  const labels = { semanal: 'semanal', diaria: 'diaria', compra: 'compra' };
-  document.querySelectorAll('.tab').forEach(el => {
-    if (el.textContent.toLowerCase().includes(labels[v])) el.classList.add('active');
-  });
-}
-
-function getDailyIngredients(day) {
-  const all = [];
-  Object.values(MEALS[day]).forEach(items => {
-    items.forEach(item => {
-      item.ingredientes.split(',').forEach(s => all.push(s.trim()));
-    });
-  });
-  return [...new Set(all)];
-}
-
-function buildMealBlock(mealKey, items, idPrefix) {
-  const id = idPrefix + '_' + mealKey;
-  const platosHtml = items.map(p => {
-    const videoBtn = p.video ? `<a class="video-link" href="${p.video}" target="_blank">▶ Ver receta en YouTube</a>` : '';
-    const elab = p.elaboracion ? `<div class="elab"><div class="elab-label">Elaboración</div>${p.elaboracion}</div>` : '';
-    return `<div class="plato">
-      <div class="plato-name">${p.nombre}</div>
-      <div class="ingred-list">${p.ingredientes}</div>
-      ${elab}
-      ${videoBtn}
-    </div>`;
-  }).join('<hr style="border:none;border-top:0.5px solid var(--border);margin:10px 0;">');
-  return `<div class="meal-block">
-    <div class="meal-header" onclick="toggleMeal('${id}')">
-      <div>
-        <div class="meal-label">${MEAL_LABELS[mealKey]}</div>
-        <div class="meal-time">${MEAL_TIMES[mealKey]} · ${items.length} plato${items.length > 1 ? 's' : ''}</div>
-      </div>
-      <div class="chevron" id="ch_${id}">▾</div>
-    </div>
-    <div class="meal-body" id="mb_${id}">${platosHtml}</div>
-  </div>`;
-}
-
-function toggleMeal(id) {
-  const mb = document.getElementById('mb_' + id);
-  const ch = document.getElementById('ch_' + id);
-  mb.classList.toggle('open');
-  ch.classList.toggle('open');
-}
-
-function buildDayHTML(day, prefix) {
-  const mealBlocks = Object.entries(MEALS[day]).map(([k, items]) => buildMealBlock(k, items, prefix)).join('');
-  const ingreds = getDailyIngredients(day);
-  const tags = ingreds.map(i => `<span class="ingred-tag">${i}</span>`).join('');
-  return `<div class="day-detail">
-    <div class="day-title">${day}</div>
-    ${mealBlocks}
-    <div class="ingred-day-section">
-      <div class="ingred-day-title">Ingredientes necesarios hoy</div>
-      <div>${tags}</div>
-    </div>
-  </div>`;
-}
-
-function buildWeekGrid() {
-  const grid = document.getElementById('weekGrid');
-  grid.innerHTML = DAYS.map(day => {
-    const almuerzo = MEALS[day].almuerzo[0].nombre;
-    const cena = MEALS[day].cena[0].nombre;
-    return `<div class="day-card" id="wdc_${day}" onclick="selectWeekDay('${day}')">
-      <div class="day-name">${day.substring(0,3).toUpperCase()}</div>
-      <div class="meal-mini">
-        <span class="mini-label">Almuerzo</span>
-        <span>${almuerzo}</span>
-        <span class="mini-label">Cena</span>
-        <span>${cena}</span>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-function selectWeekDay(day) {
-  document.querySelectorAll('.day-card').forEach(c => c.classList.remove('selected'));
-  document.getElementById('wdc_' + day).classList.add('selected');
-  document.getElementById('weekDayDetail').innerHTML = buildDayHTML(day, 'w');
-}
-
-function buildDayButtons() {
-  document.getElementById('dayButtons').innerHTML = DAYS.map(day =>
-    `<div class="day-btn" id="dbt_${day}" onclick="selectDay('${day}')">${day}</div>`
-  ).join('');
-}
-
-function selectDay(day) {
-  document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('dbt_' + day).classList.add('active');
-  document.getElementById('dayDetail').innerHTML = buildDayHTML(day, 'd');
-}
-
-function rebuildCompraUI() {
-  document.getElementById('compraGrid').innerHTML = Object.entries(COMPRA).map(([cat, items]) =>
-    `<div class="compra-cat"><div class="cat-title">${cat}</div>` +
-    items.map(item => {
-      const key = item.replace(/[\s()\/]/g, '_');
-      const isDone = checkedItems.has(item);
-      return `<div class="compra-item${isDone ? ' done' : ''}" id="ci_${key}" onclick="toggleItem('${item}','${key}')">
-        <div class="check${isDone ? ' checked' : ''}" id="ck_${key}">${isDone ? '✓' : ''}</div>
-        <span>${item}</span>
-      </div>`;
-    }).join('') + '</div>'
-  ).join('');
-  updateProgress();
-}
-
-function toggleItem(item, key) {
-  const ci = document.getElementById('ci_' + key);
-  const ck = document.getElementById('ck_' + key);
-  if (checkedItems.has(item)) {
-    checkedItems.delete(item);
-    ci.classList.remove('done');
-    ck.classList.remove('checked');
-    ck.textContent = '';
-  } else {
-    checkedItems.add(item);
-    ci.classList.add('done');
-    ck.classList.add('checked');
-    ck.textContent = '✓';
-  }
-  saveChecked(checkedItems);
-  updateProgress();
-}
-
-function resetCompra() {
-  checkedItems.clear();
-  saveChecked(checkedItems);
-  document.querySelectorAll('.compra-item').forEach(el => el.classList.remove('done'));
-  document.querySelectorAll('.check').forEach(el => { el.classList.remove('checked'); el.textContent = ''; });
-  updateProgress();
-}
-
-
-function printCompra() {
-  const now = new Date().toLocaleDateString('es-ES', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
-  let rows = '';
-  Object.entries(COMPRA).forEach(([cat, items]) => {
-    rows += '<div class="cat"><div class="cat-title">' + cat + '</div>';
-    items.forEach(item => {
-      const done = checkedItems.has(item);
-      rows += '<div class="item' + (done ? ' done' : '') + '">'
-            + '<div class="box' + (done ? ' checked' : '') + '">' + (done ? '&#10003;' : '') + '</div>'
-            + '<span>' + item + '</span></div>';
-    });
-    rows += '</div>';
-  });
-  const html = `<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
-<title>Lista de la compra</title>
-<style>
-  body{font-family:'Segoe UI',sans-serif;color:#1a1a1a;padding:2rem;font-size:13px;}
-  h1{font-size:20px;font-weight:600;margin-bottom:4px;}
-  .sub{font-size:12px;color:#666;margin-bottom:1.5rem;border-bottom:1px solid #ccc;padding-bottom:.75rem;}
-  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
-  .cat{break-inside:avoid;margin-bottom:8px;}
-  .cat-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666;border-bottom:.5px solid #ccc;padding-bottom:3px;margin-bottom:5px;}
-  .item{display:flex;align-items:center;gap:7px;padding:3px 0;border-bottom:.5px solid #eee;}
-  .item:last-child{border-bottom:none;}
-  .item.done{text-decoration:line-through;color:#aaa;}
-  .box{width:12px;height:12px;border:1px solid #999;border-radius:2px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;}
-  .box.checked{background:#1D9E75;border-color:#1D9E75;color:white;}
-  .footer{margin-top:1.5rem;text-align:center;font-size:10px;color:#999;border-top:.5px solid #eee;padding-top:.5rem;}
-</style></head><body>
-<h1>Lista de la compra</h1>
-<div class="sub">Hilario Cambero &mdash; Semana 1 &mdash; Nutricionista: Mar&#237;a Rosco Rodr&#237;guez</div>
-<div class="grid">${rows}</div>
-<div class="footer">Impreso el ${now}</div>
-</body></html>`;
-  const blob = new Blob([html], {type: 'text/html'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.target = '_blank';
-  a.rel = 'noopener';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  setTimeout(() => URL.revokeObjectURL(url), 10000);
-}
-
-
-buildWeekGrid();
-buildDayButtons();
-rebuildCompraUI();
-selectDay('Lunes');
-</script>
-
-<div id="print-area" style="display:none;"></div>
 </body>
 </html>
