@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Planificador Dieta Mes 2 — Hilario Cambero</title>
+<title>Planificador Dieta Mes 3 — Hilario Cambero</title>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
@@ -12,31 +12,32 @@
   --text: #1a1a1a; --text2: #5a5a5a; --text3: #999;
   --green: #1D9E75; --green-light: #E1F5EE; --green-mid: #9FE1CB; --green-dark: #0F6E56;
   --blue: #185FA5; --blue-light: #E6F1FB; --blue-mid: #B5D4F4;
+  --accent: #7C3AED; --accent-light: #EDE9FE; --accent-mid: #C4B5FD; --accent-dark: #5B21B6;
   --radius: 10px; --radius-lg: 14px;
 }
 body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; font-size: 15px; line-height: 1.5; }
 header { background: var(--surface); border-bottom: 0.5px solid var(--border); padding: 1.25rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
 .header-title { font-size: 17px; font-weight: 600; }
 .header-sub { font-size: 12px; color: var(--text3); margin-top: 1px; }
-.badge-nutri { font-size: 11px; background: var(--green-light); color: var(--green-dark); border-radius: 20px; padding: 4px 12px; }
+.badge-nutri { font-size: 11px; background: var(--accent-light); color: var(--accent-dark); border-radius: 20px; padding: 4px 12px; }
 .back-btn { font-size: 12px; color: var(--blue); text-decoration: none; border: 0.5px solid var(--blue-mid); border-radius: 20px; padding: 5px 12px; background: var(--blue-light); }
 .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
 .tabs { display: flex; gap: 6px; margin-bottom: 1.75rem; flex-wrap: wrap; }
 .tab { padding: 9px 18px; border: 0.5px solid var(--border2); border-radius: var(--radius); cursor: pointer; font-size: 14px; background: var(--surface); color: var(--text2); transition: all 0.15s; }
-.tab.active { background: var(--green); color: white; border-color: var(--green); font-weight: 500; }
+.tab.active { background: var(--accent); color: white; border-color: var(--accent); font-weight: 500; }
 .tab:hover:not(.active) { background: var(--surface2); }
 .view { display: none; } .view.active { display: block; }
 .day-grid { display: grid; grid-template-columns: repeat(7, minmax(0,1fr)); gap: 8px; margin-bottom: 1rem; }
 .day-card { border: 0.5px solid var(--border); border-radius: var(--radius); padding: 10px 8px; cursor: pointer; transition: all 0.15s; background: var(--surface); }
-.day-card:hover { border-color: var(--green); }
-.day-card.selected { border-color: var(--green); background: var(--green-light); }
+.day-card:hover { border-color: var(--accent); }
+.day-card.selected { border-color: var(--accent); background: var(--accent-light); }
 .day-name { font-size: 11px; font-weight: 600; margin-bottom: 6px; color: var(--text2); letter-spacing: 0.05em; }
-.day-card.selected .day-name { color: var(--green-dark); }
+.day-card.selected .day-name { color: var(--accent-dark); }
 .meal-mini { font-size: 10px; color: var(--text3); line-height: 1.4; }
 .meal-mini span { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .meal-mini .mini-label { font-size: 9px; color: var(--text3); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.04em; }
 .day-detail { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; margin-top: 1rem; }
-.day-title { font-size: 20px; font-weight: 600; margin-bottom: 1.25rem; color: var(--green-dark); }
+.day-title { font-size: 20px; font-weight: 600; margin-bottom: 1.25rem; color: var(--accent-dark); }
 .meal-block { margin-bottom: 10px; border: 0.5px solid var(--border); border-radius: var(--radius); overflow: hidden; }
 .meal-header { display: flex; align-items: center; justify-content: space-between; padding: 11px 14px; cursor: pointer; background: var(--surface2); user-select: none; transition: background 0.1s; }
 .meal-header:hover { background: #eae8e2; }
@@ -48,18 +49,18 @@ header { background: var(--surface); border-bottom: 0.5px solid var(--border); p
 .plato-name { font-size: 13px; font-weight: 600; margin-bottom: 5px; }
 .ingred-list { font-size: 12px; color: var(--text2); line-height: 1.7; margin-bottom: 6px; }
 .ingred-list::before { content: "🧂 "; }
-.elab { font-size: 12px; color: var(--text2); border-left: 2px solid var(--green-mid); padding-left: 10px; line-height: 1.7; margin-bottom: 8px; font-style: italic; }
-.elab-label { font-size: 10px; font-weight: 600; color: var(--green); margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.05em; font-style: normal; }
+.elab { font-size: 12px; color: var(--text2); border-left: 2px solid var(--accent-mid); padding-left: 10px; line-height: 1.7; margin-bottom: 8px; font-style: italic; }
+.elab-label { font-size: 10px; font-weight: 600; color: var(--accent); margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.05em; font-style: normal; }
 .video-link { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; color: var(--blue); text-decoration: none; border: 0.5px solid var(--blue-mid); border-radius: 20px; padding: 4px 10px; background: var(--blue-light); transition: background 0.15s; }
 .video-link:hover { background: var(--blue-mid); }
 .chevron { font-size: 14px; color: var(--text3); transition: transform 0.2s; line-height: 1; }
 .chevron.open { transform: rotate(180deg); }
-.ingred-day-section { background: var(--green-light); border: 0.5px solid var(--green-mid); border-radius: var(--radius); padding: 14px; margin-top: 14px; }
-.ingred-day-title { font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--green-dark); }
-.ingred-tag { display: inline-block; font-size: 11px; background: white; color: var(--green-dark); border: 0.5px solid var(--green-mid); border-radius: 20px; padding: 3px 10px; margin: 3px; }
+.ingred-day-section { background: var(--accent-light); border: 0.5px solid var(--accent-mid); border-radius: var(--radius); padding: 14px; margin-top: 14px; }
+.ingred-day-title { font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--accent-dark); }
+.ingred-tag { display: inline-block; font-size: 11px; background: white; color: var(--accent-dark); border: 0.5px solid var(--accent-mid); border-radius: 20px; padding: 3px 10px; margin: 3px; }
 .day-buttons { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.25rem; }
 .day-btn { padding: 8px 14px; border: 0.5px solid var(--border2); border-radius: var(--radius); cursor: pointer; font-size: 13px; background: var(--surface); color: var(--text2); transition: all 0.15s; }
-.day-btn.active { background: var(--green); color: white; border-color: var(--green); font-weight: 500; }
+.day-btn.active { background: var(--accent); color: white; border-color: var(--accent); font-weight: 500; }
 .day-btn:hover:not(.active) { background: var(--surface2); }
 .compra-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
 .compra-cat { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 14px; }
@@ -68,16 +69,16 @@ header { background: var(--surface); border-bottom: 0.5px solid var(--border); p
 .compra-item:last-child { border-bottom: none; }
 .compra-item.done { text-decoration: line-through; color: var(--text3); }
 .check { width: 16px; height: 16px; border: 0.5px solid var(--border2); border-radius: 4px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; transition: all 0.15s; }
-.check.checked { background: var(--green); border-color: var(--green); color: white; }
+.check.checked { background: var(--accent); border-color: var(--accent); color: white; }
 .progress-bar-wrap { background: var(--surface2); border-radius: 20px; height: 6px; margin-bottom: 1.5rem; overflow: hidden; }
-.progress-bar { background: var(--green); height: 6px; border-radius: 20px; transition: width 0.3s; }
+.progress-bar { background: var(--accent); height: 6px; border-radius: 20px; transition: width 0.3s; }
 .progress-label { font-size: 12px; color: var(--text3); margin-bottom: 6px; }
 </style>
 </head>
 <body>
 <header>
   <div>
-    <div class="header-title">Planificador de Dieta — Mes 2</div>
+    <div class="header-title">Planificador de Dieta — Mes 3</div>
     <div class="header-sub">Hilario Cambero</div>
   </div>
   <div style="display:flex;align-items:center;gap:12px;">
@@ -102,9 +103,12 @@ header { background: var(--surface); border-bottom: 0.5px solid var(--border); p
   </div>
   <div id="view-compra" class="view">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
-      <div><div class="progress-label" id="progressLabel">0 de 0 artículos marcados</div><div id="syncStatus" style="font-size:10px;color:#1D9E75;margin-top:2px;">&#9679; Sincronizado con la nube</div></div>
+      <div>
+        <div class="progress-label" id="progressLabel">0 de 0 artículos marcados</div>
+        <div id="syncStatus" style="font-size:10px;color:#7C3AED;margin-top:2px;">&#9679; Sincronizado con la nube</div>
+      </div>
       <div style="display:flex;gap:10px;align-items:center;">
-        <button onclick="printCompra()" style="font-size:11px;color:var(--green-dark);background:var(--green-light);border:0.5px solid var(--green-mid);border-radius:20px;padding:4px 12px;cursor:pointer;font-weight:500;">🖨️ Imprimir</button>
+        <button onclick="printCompra()" style="font-size:11px;color:#5B21B6;background:#EDE9FE;border:0.5px solid #C4B5FD;border-radius:20px;padding:4px 12px;cursor:pointer;font-weight:500;">🖨️ Imprimir</button>
         <button onclick="resetCompra()" style="font-size:11px;color:var(--text3);background:none;border:none;cursor:pointer;">Reiniciar</button>
       </div>
     </div>
@@ -130,9 +134,8 @@ const firebaseConfig = {
 
 const fbApp = firebase.initializeApp(firebaseConfig);
 const db = fbApp.database();
-const compraRef = db.ref('compra_mes2/items');
+const compraRef = db.ref('compra_mes3/items');
 const checkedItems = new Set();
-
 
 const DAYS = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
 const MEAL_LABELS = { desayuno:'Desayuno', media_manana:'Media mañana', almuerzo:'Almuerzo', merienda:'Merienda', cena:'Cena' };
@@ -141,145 +144,145 @@ const MEAL_TIMES = { desayuno:'07:30', media_manana:'11:00', almuerzo:'14:00', m
 const MEALS = {
   Lunes: {
     desayuno: [
-      { nombre:'Tostadas de aceite de oliva y tomate', ingredientes:'1 tomate (100g), 1 rebanada pan integral (50g), 1 cda. aceite de oliva (10g)', elaboracion:'Tostar el pan, frotar el tomate y añadir el aceite de oliva.', video:'https://www.youtube.com/results?search_query=tostadas+aceite+oliva+tomate+receta' },
-      { nombre:'Café con leche desnatada ×2', ingredientes:'2 tazas café con leche desnatada (200g c/u)', elaboracion:null, video:null }
+      { nombre:'Tostadas de aceite de oliva y tomate', ingredientes:'1 tomate (100g), 1 rebanada pan integral (50g), 1 cda. aceite de oliva (10g)', elaboracion:'Tostar el pan, frotar el tomate y añadir el aceite de oliva.', video:'https://www.youtube.com/results?search_query=tostadas+aceite+oliva+tomate' },
+      { nombre:'Café con leche desnatada + Café solo', ingredientes:'1 taza café con leche desnatada (200g), 2 tazas café natural (100g)', elaboracion:'Endulzar con sacarina.', video:null }
     ],
     media_manana: [{ nombre:'Café con leche desnatada', ingredientes:'1 taza café con leche desnatada (200g)', elaboracion:null, video:null }],
     almuerzo: [
-      { nombre:'Solomillo de cerdo con patatas y pimientos con salsa de queso', ingredientes:'1½ filete solomillo de cerdo (150g), 1½ pimiento rojo (150g), 1 patata (150g), 1 pimiento verde (100g), queso roquefort (30g), leche desnatada (20g), 1 cda. aceite oliva (10g)', elaboracion:'Elaborar la salsa con el queso azul y la leche desnatada. Hacer el solomillo y las verduras a la plancha o al horno. Verter la salsa sobre la carne.', video:'https://www.youtube.com/results?search_query=solomillo+cerdo+patatas+pimientos+salsa+queso' },
+      { nombre:'Gazpacho de tomate', ingredientes:'1 tomate (100g), ½ pimiento rojo (30g), ½ cebolla (30g), pepinos (20g), 1 cdta. aceite oliva (2g)', elaboracion:'Poner todos los ingredientes en un recipiente y batir. Añadir vinagre y sal con moderación. Añadir agua mineral al gusto.', video:'https://www.youtube.com/results?search_query=gazpacho+tomate+receta+tradicional' },
+      { nombre:'Solomillo de cerdo con verduras y salsa de queso', ingredientes:'1 filete cerdo-lomo (100g), 20 espárragos verdes (100g), ½ calabacín (100g), 1 pimiento rojo (100g), ½ cebolla (50g), ½ vaso leche desnatada (30g), queso roquefort (30g), 1 cda. aceite oliva (10g)', elaboracion:'Hacer el solomillo y trocear las verduras. Elaborar la salsa con leche desnatada y queso azul. Añadir sobre la carne y verduras.', video:'https://www.youtube.com/results?search_query=solomillo+cerdo+verduras+salsa+queso' },
       { nombre:'Pieza de fruta', ingredientes:'1 fruta mediana (150g)', elaboracion:null, video:null }
     ],
     merienda: [{ nombre:'Café solo', ingredientes:'2 tazas café natural (100g). Endulzar con sacarina.', elaboracion:null, video:null }],
     cena: [
-      { nombre:'Ensalada de tomate con caballa y queso fresco', ingredientes:'2½ tomates (290g), ½ filete caballa (60g), queso fresco (50g), ½ cebolla (50g), pizca vinagre de módena (5g)', elaboracion:'Condimentar al gusto.', video:'https://www.youtube.com/results?search_query=ensalada+tomate+caballa+queso+fresco' },
-      { nombre:'Macedonia de yogur con frutos rojos', ingredientes:'1 yogur desnatado (120g), 1 porción frutos rojos (100g)', elaboracion:null, video:null },
+      { nombre:'Ensalada de cogollos, anchoas, salmón y queso', ingredientes:'1 tomate (140g), cogollos (100g), queso fresco (40g), ½ loncha salmón ahumado (30g), 1 lata anchoas en aceite (20g), 1 cda. vinagre módena (10g), 1 cda. aceite oliva (10g)', elaboracion:'Lavar los cogollos, dividir en cuatro trozos cada uno, poner en una fuente y añadirles las anchoas y el queso por encima.', video:'https://www.youtube.com/results?search_query=ensalada+cogollos+anchoas+salmon+queso' },
+      { nombre:'Macedonia de yogur con manzana y canela', ingredientes:'1 yogur desnatado (120g), ½ manzana (100g), pizca canela', elaboracion:null, video:null },
       { nombre:'Cerveza rubia', ingredientes:'1½ caña cerveza rubia (250g)', elaboracion:null, video:null }
     ]
   },
   Martes: {
     desayuno: [
       { nombre:'Tostada de jamón ibérico con tomate', ingredientes:'1 rebanada pan integral (50g), ½ tomate (50g), 2 lonchas jamón ibérico (40g), 1 cda. aceite oliva (10g)', elaboracion:'Tostar el pan, frotar el tomate y añadir el jamón y el aceite.', video:'https://www.youtube.com/results?search_query=tostada+jamon+iberico+tomate' },
-      { nombre:'Café con leche desnatada ×2', ingredientes:'2 tazas café con leche desnatada (200g c/u)', elaboracion:null, video:null }
+      { nombre:'Café con leche desnatada + Café solo', ingredientes:'1 taza café con leche desnatada (200g), 2 tazas café natural (100g)', elaboracion:'Endulzar con sacarina.', video:null }
     ],
     media_manana: [{ nombre:'Café con leche desnatada', ingredientes:'1 taza café con leche desnatada (200g)', elaboracion:null, video:null }],
     almuerzo: [
-      { nombre:'Ensalada de pasta con pollo y queso feta', ingredientes:'½ pechuga pollo (100g), 10 tomates cherry (100g), pasta (70g), queso feta (40g), cebolla (20g), zanahoria (20g), remolacha (20g), 1 cda. vinagre (10g), 1 cda. aceite oliva (10g)', elaboracion:'Limpiar y trocear las verduras. Mezclar con la pasta cocida y el queso feta. Aliñar con sal, vinagre y aceite.', video:'https://www.youtube.com/results?search_query=ensalada+pasta+pollo+queso+feta' },
+      { nombre:'Ensalada de sushi', ingredientes:'½ aguacate (100g), ½ filete salmón (100g), ½ mango (100g), 10 tomates cherry (100g), 1 taza arroz (70g), 1½ pepinos (50g), salsa de soja (30g)', elaboracion:'Preparar el arroz. Cortar en trocitos el salmón, el aguacate, el mango y los pepinos. Mezclar con el arroz y aliñar con salsa de soja.', video:'https://www.youtube.com/results?search_query=ensalada+sushi+salmon+aguacate+receta' },
       { nombre:'Pieza de fruta', ingredientes:'1 fruta mediana (150g)', elaboracion:null, video:null }
     ],
     merienda: [{ nombre:'Café solo', ingredientes:'2 tazas café natural (100g). Endulzar con sacarina.', elaboracion:null, video:null }],
     cena: [
-      { nombre:'Tosta de tortilla de calabacín, atún y queso', ingredientes:'2 huevos (110g), ½ calabacín (100g), 1 tosta pan integral (70g), 1 lata atún en aceite (60g), ½ tomate (50g), queso mozzarella (30g), rúcula (10g)', elaboracion:'Untar el pan con tomate o añadir unas rodajas. Hacer la tortilla de calabacín y colocar sobre la tosta con el atún y el queso.', video:'https://www.youtube.com/results?search_query=tosta+tortilla+calabacin+atun+queso' },
-      { nombre:'Macedonia de yogur con manzana y canela', ingredientes:'1 yogur desnatado (120g), ½ manzana (100g), pizca de canela', elaboracion:null, video:null },
+      { nombre:'Ensalada con queso fresco y manzana', ingredientes:'1½ tomate (150g), brotes espinacas y canónigos (100g), ½ manzana (100g), maíz cocido (40g), queso fresco (40g), ½ lata atún en aceite (30g), 1 cda. vinagre módena (10g), 1 cda. aceite oliva (10g)', elaboracion:'Pelar el tomate y cortarlo. Añadir el maíz y el atún escurrido. Pelar la manzana y cortarla a pedacitos. Añadir el queso fresco en cubitos y aliñar.', video:'https://www.youtube.com/results?search_query=ensalada+queso+fresco+manzana+receta' },
+      { nombre:'Macedonia de yogur con piña', ingredientes:'1 yogur desnatado (120g), piña natural (100g)', elaboracion:null, video:null },
       { nombre:'Cerveza rubia', ingredientes:'1½ caña cerveza rubia (250g)', elaboracion:null, video:null }
     ]
   },
   Miércoles: {
     desayuno: [
-      { nombre:'Tostadas de aceite de oliva y tomate', ingredientes:'1 tomate (100g), 1 rebanada pan integral (50g), 1 cda. aceite de oliva (10g)', elaboracion:'Tostar el pan, frotar el tomate y añadir el aceite de oliva.', video:'https://www.youtube.com/results?search_query=tostadas+aceite+oliva+tomate+receta' },
-      { nombre:'Café con leche desnatada ×2', ingredientes:'2 tazas café con leche desnatada (200g c/u)', elaboracion:null, video:null }
+      { nombre:'Tostadas de aceite de oliva y tomate', ingredientes:'1 tomate (100g), 1 rebanada pan integral (50g), 1 cda. aceite de oliva (10g)', elaboracion:'Tostar el pan, frotar el tomate y añadir el aceite de oliva.', video:'https://www.youtube.com/results?search_query=tostadas+aceite+oliva+tomate' },
+      { nombre:'Café con leche desnatada + Café solo', ingredientes:'1 taza café con leche desnatada (200g), 2 tazas café natural (100g)', elaboracion:'Endulzar con sacarina.', video:null }
     ],
     media_manana: [{ nombre:'Café con leche desnatada', ingredientes:'1 taza café con leche desnatada (200g)', elaboracion:null, video:null }],
     almuerzo: [
-      { nombre:'Salmorejo de tomate, manzana y jamón', ingredientes:'1 tomate (140g), ½ manzana (100g), 1 cda. aceite oliva (10g), pizca ajo', elaboracion:'Triturar el tomate con la manzana, ajo y aceite. Añadir huevo cocido picado y jamón en taquitos.', video:'https://www.youtube.com/results?search_query=salmorejo+tomate+manzana+jamon' },
-      { nombre:'Salmón a la plancha con mahonesa', ingredientes:'1 filete salmón (150g), 1 cda. mahonesa (20g), 1 cdta. aceite oliva (2g)', elaboracion:'Poner el salmón con la plancha bien caliente.', video:'https://www.youtube.com/results?search_query=salmon+plancha+mahonesa' },
+      { nombre:'Gazpacho de tomate', ingredientes:'1 vaso gazpacho de tomate (250g)', elaboracion:'Preparado o casero. Servir frío.', video:'https://www.youtube.com/results?search_query=gazpacho+tomate+receta' },
+      { nombre:'Salpicón de pulpo', ingredientes:'2½ tomates (290g), 1 plato pulpo (150g), ½ pimiento verde (50g), ½ pimiento rojo (50g), ½ cebolla (50g), 1 cda. vinagre (10g), 1 cda. aceite oliva (10g)', elaboracion:'Cortar a trocitos el pimiento, la cebolla y el tomate. Añadir el pulpo cocido y aliñar con vinagre y aceite.', video:'https://www.youtube.com/results?search_query=salpicon+pulpo+receta' },
       { nombre:'Pieza de fruta', ingredientes:'1 fruta mediana (150g)', elaboracion:null, video:null }
     ],
     merienda: [{ nombre:'Café solo', ingredientes:'2 tazas café natural (100g). Endulzar con sacarina.', elaboracion:null, video:null }],
     cena: [
-      { nombre:'Tosta de pollo con mango', ingredientes:'2 rebanadas pan integral (100g), ½ pechuga pollo (100g), ½ mango (100g), rúcula (20g), 1½ cda. queso philadelphia light (20g)', elaboracion:'Untar el pan con el queso philadelphia. Añadir el pollo a la plancha, el mango y la rúcula.', video:'https://www.youtube.com/results?search_query=tosta+pollo+mango+receta' },
-      { nombre:'Macedonia de yogur con fresas', ingredientes:'1 yogur desnatado (120g), 10 fresas (100g)', elaboracion:null, video:null },
+      { nombre:'Tosta de tortilla francesa, aguacate y queso', ingredientes:'1 tosta pan integral (70g), 1 huevo (60g), ½ aguacate (50g), ½ tomate (50g), queso mozzarella (20g), rúcula (10g), aceite oliva (5g)', elaboracion:'Untar el pan con tomate o añadir unas rodajas. Hacer la tortilla francesa y colocar sobre la tosta con el aguacate y el queso.', video:'https://www.youtube.com/results?search_query=tosta+tortilla+francesa+aguacate+queso' },
+      { nombre:'Macedonia de yogur con manzana y canela', ingredientes:'1 yogur desnatado (120g), ½ manzana (100g), pizca canela', elaboracion:null, video:null },
       { nombre:'Cerveza rubia', ingredientes:'1½ caña cerveza rubia (250g)', elaboracion:null, video:null }
     ]
   },
   Jueves: {
     desayuno: [
       { nombre:'Tostada de jamón ibérico con tomate', ingredientes:'1 rebanada pan integral (50g), ½ tomate (50g), 2 lonchas jamón ibérico (40g), 1 cda. aceite oliva (10g)', elaboracion:'Tostar el pan, frotar el tomate y añadir el jamón y el aceite.', video:'https://www.youtube.com/results?search_query=tostada+jamon+iberico+tomate' },
-      { nombre:'Café con leche desnatada ×2', ingredientes:'2 tazas café con leche desnatada (200g c/u)', elaboracion:null, video:null }
+      { nombre:'Café con leche desnatada + Café solo', ingredientes:'1 taza café con leche desnatada (200g), 2 tazas café natural (100g)', elaboracion:'Endulzar con sacarina.', video:null }
     ],
     media_manana: [{ nombre:'Café con leche desnatada', ingredientes:'1 taza café con leche desnatada (200g)', elaboracion:null, video:null }],
     almuerzo: [
-      { nombre:'Ensalada de lentejas', ingredientes:'3 cdas. lentejas (70g), ½ tomate (50g), 1 lata atún en aceite (40g), queso fresco (30g), ½ pimiento rojo (30g), cebolla (20g), 1 cda. vinagre módena (10g), 1 cda. aceite oliva (10g)', elaboracion:'Mezclar todos los ingredientes y aliñar con vinagre y aceite.', video:'https://www.youtube.com/results?search_query=ensalada+lentejas+receta' },
+      { nombre:'Ensalada de garbanzos con atún y aguacate', ingredientes:'1 tomate (140g), 1 lata atún en aceite (60g), garbanzos cocidos (60g), ½ aguacate (50g), ½ pimiento verde (50g), ½ pimiento rojo (50g), ½ cebolla (50g), crema de módena (10g)', elaboracion:'Mezclar todos los ingredientes y aliñar con crema de módena y aceite.', video:'https://www.youtube.com/results?search_query=ensalada+garbanzos+atun+aguacate' },
       { nombre:'Pieza de fruta', ingredientes:'1 fruta mediana (150g)', elaboracion:null, video:null }
     ],
     merienda: [{ nombre:'Café solo', ingredientes:'2 tazas café natural (100g). Endulzar con sacarina.', elaboracion:null, video:null }],
     cena: [
-      { nombre:'Ensalada con jamón ibérico y mango', ingredientes:'½ mango (100g), brotes espinacas y canónigos (70g), queso fresco (40g), 2 lonchas jamón ibérico (40g), nueces (20g), 1 cda. vinagre módena (10g), 1 cda. aceite oliva (10g)', elaboracion:'Colocar las lechugas en ensaladera. Pelar el mango y cortarlo en láminas. Colocar el mango, el jamón y una vinagreta de aceite, módena, pimienta y sal.', video:'https://www.youtube.com/results?search_query=ensalada+jamon+iberico+mango' },
-      { nombre:'Macedonia de yogur con kiwi', ingredientes:'1 yogur desnatado (120g), 1 kiwi (100g)', elaboracion:null, video:null },
+      { nombre:'Bocadillo de Pepito de ternera', ingredientes:'1 rebanada pan integral (60g), ternera-lomo (60g), ½ pimiento verde (60g), ½ tomate (60g), ½ pimiento rojo (60g), queso rulo de cabra (20g)', elaboracion:'Hacer la ternera a la plancha con los pimientos. Montar el bocadillo con el queso de cabra y el tomate.', video:'https://www.youtube.com/results?search_query=pepito+ternera+bocadillo+receta' },
+      { nombre:'Macedonia de yogur con manzana y canela', ingredientes:'1 yogur desnatado (120g), ½ manzana (100g), pizca canela', elaboracion:null, video:null },
       { nombre:'Cerveza rubia', ingredientes:'1½ caña cerveza rubia (250g)', elaboracion:null, video:null }
     ]
   },
   Viernes: {
     desayuno: [
-      { nombre:'Tostadas de aceite de oliva y tomate', ingredientes:'1 tomate (100g), 1 rebanada pan integral (50g), 1 cda. aceite de oliva (10g)', elaboracion:'Tostar el pan, frotar el tomate y añadir el aceite de oliva.', video:'https://www.youtube.com/results?search_query=tostadas+aceite+oliva+tomate+receta' },
-      { nombre:'Café con leche desnatada ×2', ingredientes:'2 tazas café con leche desnatada (200g c/u)', elaboracion:null, video:null }
+      { nombre:'Tostadas de aceite de oliva y tomate', ingredientes:'1 tomate (100g), 1 rebanada pan integral (50g), 1 cda. aceite de oliva (10g)', elaboracion:'Tostar el pan, frotar el tomate y añadir el aceite de oliva.', video:'https://www.youtube.com/results?search_query=tostadas+aceite+oliva+tomate' },
+      { nombre:'Café con leche desnatada + Café solo', ingredientes:'1 taza café con leche desnatada (200g), 2 tazas café natural (100g)', elaboracion:'Endulzar con sacarina.', video:null }
     ],
     media_manana: [{ nombre:'Café con leche desnatada', ingredientes:'1 taza café con leche desnatada (200g)', elaboracion:null, video:null }],
     almuerzo: [
-      { nombre:'Parrillada de verduras con salsa de soja y miel', ingredientes:'½ calabacín (100g), 1 pimiento rojo (100g), 1 cebolla (100g), 1 cda. aceite oliva (10g), salsa de soja (10g), pizca miel (5g), 2½ ajos (5g)', elaboracion:'Asar las verduras a la plancha o parrilla. Mezclar la salsa de soja con miel y ajo y verter sobre las verduras.', video:'https://www.youtube.com/results?search_query=parrillada+verduras+salsa+soja+miel' },
-      { nombre:'Dorada a la plancha', ingredientes:'1 filete dorada (150g), pizca aceite oliva (5g)', elaboracion:'Brasear la dorada y servir. Condimentar con moderación con especias.', video:'https://www.youtube.com/results?search_query=dorada+plancha+receta' },
+      { nombre:'Ensalada de pimientos asados y huevo cocido', ingredientes:'1 plato pimiento rojo asado (250g), 1 huevo cocido (60g), ½ cebolla (40g), 1 cda. vinagre módena (10g)', elaboracion:'Asar los pimientos. Pelar y trocear. Añadir el huevo cocido en rodajas, la cebolla y aliñar con vinagre de módena.', video:'https://www.youtube.com/results?search_query=ensalada+pimientos+asados+huevo+cocido' },
+      { nombre:'Bonito a la plancha', ingredientes:'1 filete bonito fresco (150g), aceite oliva (5g)', elaboracion:'Brasear el bonito en plancha bien caliente. Condimentar con moderación.', video:'https://www.youtube.com/results?search_query=bonito+plancha+receta' },
       { nombre:'Pieza de fruta', ingredientes:'1 fruta mediana (150g)', elaboracion:null, video:null }
     ],
     merienda: [{ nombre:'Café solo', ingredientes:'2 tazas café natural (100g). Endulzar con sacarina.', elaboracion:null, video:null }],
     cena: [
-      { nombre:'Ensalada templada de pollo con vinagreta de mostaza y miel', ingredientes:'1 pechuga pollo (150g), 10 tomates cherry (100g), brotes espinacas y canónigos (70g), ½ pimiento rojo (50g), ½ cebolla (50g), queso manchego semicurado (40g), miel (10g), 1 cda. vinagre módena (10g), 1 cda. aceite oliva (10g), mostaza (5g)', elaboracion:'Hacer el pollo con la cebolla y el pimiento rojo en sartén. Añadir los brotes, tomates cherry y queso. Incorporar el pollo troceado y aliñar con vinagreta de mostaza y miel.', video:'https://www.youtube.com/results?search_query=ensalada+templada+pollo+vinagreta+mostaza+miel' },
-      { nombre:'Macedonia de yogur con frutos rojos', ingredientes:'1 yogur desnatado (120g), 1 porción frutos rojos (100g)', elaboracion:null, video:null },
+      { nombre:'Revuelto de calabacines con jamón', ingredientes:'1 calabacín (250g), 2 huevos (110g), queso parmesano (40g), 2 lonchas jamón serrano (40g), 1 cda. aceite oliva (10g)', elaboracion:'Saltear el calabacín en aceite. Añadir el jamón y los huevos batidos. Remover hasta cuajar. Añadir el queso rallado al final.', video:'https://www.youtube.com/results?search_query=revuelto+calabacines+jamon+receta' },
+      { nombre:'Macedonia de yogur con manzana y canela', ingredientes:'1 yogur desnatado (120g), ½ manzana (100g), pizca canela', elaboracion:null, video:null },
       { nombre:'Cerveza rubia', ingredientes:'1½ caña cerveza rubia (250g)', elaboracion:null, video:null }
     ]
   },
   Sábado: {
     desayuno: [
       { nombre:'Tostada de jamón ibérico con tomate', ingredientes:'1 rebanada pan integral (50g), ½ tomate (50g), 2 lonchas jamón ibérico (40g), 1 cda. aceite oliva (10g)', elaboracion:'Tostar el pan, frotar el tomate y añadir el jamón y el aceite.', video:'https://www.youtube.com/results?search_query=tostada+jamon+iberico+tomate' },
-      { nombre:'Café con leche desnatada ×2', ingredientes:'2 tazas café con leche desnatada (200g c/u)', elaboracion:null, video:null }
+      { nombre:'Café con leche desnatada + Café solo', ingredientes:'1 taza café con leche desnatada (200g), 2 tazas café natural (100g)', elaboracion:'Endulzar con sacarina.', video:null }
     ],
     media_manana: [{ nombre:'Café con leche desnatada', ingredientes:'1 taza café con leche desnatada (200g)', elaboracion:null, video:null }],
     almuerzo: [
-      { nombre:'Huevos con brócoli y queso', ingredientes:'1 plato brócoli (200g), 2 huevos (110g), 10 tomates cherry (100g), queso mozzarella (30g), 1 loncha jamón ibérico (20g), 1 cda. aceite oliva (10g)', elaboracion:'Huevos al plato. Brócoli al vapor, rehogar con jamón y acompañar con tomates cherry.', video:'https://www.youtube.com/results?search_query=huevos+brocoli+queso+receta' },
+      { nombre:'Gazpacho de tomate', ingredientes:'1 tomate (100g), ½ pimiento rojo (30g), ½ cebolla (30g), pepinos (20g), 1 cdta. aceite oliva (2g)', elaboracion:'Poner todos los ingredientes en un recipiente y batir. Añadir vinagre y sal. Añadir agua mineral al gusto.', video:'https://www.youtube.com/results?search_query=gazpacho+tomate+receta+tradicional' },
+      { nombre:'Huevos rellenos con atún, aguacate y mahonesa', ingredientes:'2 huevos duros (120g), ½ aguacate (100g), 10 tomates cherry (100g), 1 lata atún en aceite (60g), 1 cda. mahonesa (20g), cebolla (20g)', elaboracion:'Cocer el huevo, partirlo a la mitad y rellenar de atún con mahonesa y tomate. Colocar un espárrago blanco encima de cada mitad. Condimentar con orégano.', video:'https://www.youtube.com/results?search_query=huevos+rellenos+atun+aguacate+mahonesa' },
       { nombre:'Pieza de fruta', ingredientes:'1 fruta mediana (150g)', elaboracion:null, video:null }
     ],
     merienda: [{ nombre:'Café solo', ingredientes:'2 tazas café natural (100g). Endulzar con sacarina.', elaboracion:null, video:null }],
     cena: [
-      { nombre:'Hamburguesa completa con rúcula y rulo de cabra', ingredientes:'1 hamburguesa (100g), 2 rebanadas pan hamburguesa (100g), ½ tomate (50g), queso rulo de cabra (20g), pepinillos (10g), rúcula (10g), cebolla (10g)', elaboracion:'Cocinar la hamburguesa a la plancha. Montar con pan, rúcula, tomate, rulo de cabra y pepinillos.', video:'https://www.youtube.com/results?search_query=hamburguesa+rucula+rulo+cabra' },
-      { nombre:'Macedonia de yogur con fresas', ingredientes:'1 yogur desnatado (120g), 10 fresas (100g)', elaboracion:null, video:null },
+      { nombre:'Tosta de hummus y salmón ahumado', ingredientes:'1 tosta pan integral (70g), 1 loncha salmón ahumado (50g), 5 tomates cherry (50g), 1½ cda. hummus (30g), brotes espinacas y canónigos (20g)', elaboracion:'Untar la tosta con el hummus. Añadir el salmón ahumado, los tomates cherry y los brotes.', video:'https://www.youtube.com/results?search_query=tosta+hummus+salmon+ahumado' },
+      { nombre:'Macedonia de yogur con manzana y canela', ingredientes:'1 yogur desnatado (120g), ½ manzana (100g), pizca canela', elaboracion:null, video:null },
       { nombre:'Cerveza rubia', ingredientes:'1½ caña cerveza rubia (250g)', elaboracion:null, video:null }
     ]
   },
   Domingo: {
     desayuno: [
-      { nombre:'Tostadas de aceite de oliva y tomate', ingredientes:'1 tomate (100g), 1 rebanada pan integral (50g), 1 cda. aceite de oliva (10g)', elaboracion:'Tostar el pan, frotar el tomate y añadir el aceite de oliva.', video:'https://www.youtube.com/results?search_query=tostadas+aceite+oliva+tomate+receta' },
-      { nombre:'Café con leche desnatada ×2', ingredientes:'2 tazas café con leche desnatada (200g c/u)', elaboracion:null, video:null }
+      { nombre:'Tostadas de aceite de oliva y tomate', ingredientes:'1 tomate (100g), 1 rebanada pan integral (50g), 1 cda. aceite de oliva (10g)', elaboracion:'Tostar el pan, frotar el tomate y añadir el aceite de oliva.', video:'https://www.youtube.com/results?search_query=tostadas+aceite+oliva+tomate' },
+      { nombre:'Café con leche desnatada + Café solo', ingredientes:'1 taza café con leche desnatada (200g), 2 tazas café natural (100g)', elaboracion:'Endulzar con sacarina.', video:null }
     ],
     media_manana: [{ nombre:'Café con leche desnatada', ingredientes:'1 taza café con leche desnatada (200g)', elaboracion:null, video:null }],
     almuerzo: [
-      { nombre:'Salmorejo con aguacate, jamón y huevo', ingredientes:'2½ tomates (300g), ½ aguacate (100g), 1 huevo (60g), 2 lonchas jamón ibérico (40g), 2 cdas. aceite oliva (20g), pizca pan integral (10g), 2½ ajos (5g)', elaboracion:'Triturar los tomates con el ajo, pan, aceite y sal hasta obtener textura cremosa. Servir frío con huevo cocido picado, jamón y aguacate.', video:'https://www.youtube.com/results?search_query=salmorejo+aguacate+jamon+huevo' },
+      { nombre:'Pollo con verduras y salsa de mostaza y miel', ingredientes:'1 pechuga pollo (150g), 1 pimiento verde (100g), 20 espárragos verdes (100g), 1 pimiento rojo (100g), ½ cebolla (50g), mostaza (10g), 1 cda. aceite oliva (10g), miel (5g)', elaboracion:'Hacer la pechuga de pollo a la plancha y rehogar con las verduras. Condimentar con una vinagreta de mostaza, aceite de oliva y miel.', video:'https://www.youtube.com/results?search_query=pollo+verduras+salsa+mostaza+miel' },
       { nombre:'Pieza de fruta', ingredientes:'1 fruta mediana (150g)', elaboracion:null, video:null }
     ],
     merienda: [{ nombre:'Café solo', ingredientes:'2 tazas café natural (100g). Endulzar con sacarina.', elaboracion:null, video:null }],
     cena: [
-      { nombre:'Pizza de champiñones y queso', ingredientes:'1½ base de pizza (150g), champiñones (100g), queso rulo de cabra (50g), ½ calabacín (50g), ½ pimiento rojo (50g), ½ cebolla (50g)', elaboracion:'Extender la base de pizza con los ingredientes y hornear según las instrucciones de la base.', video:'https://www.youtube.com/results?search_query=pizza+champinones+queso+casera' },
-      { nombre:'Macedonia de yogur con kiwi', ingredientes:'1 yogur desnatado (120g), 1 kiwi (100g)', elaboracion:null, video:null },
+      { nombre:'Ensalada de tomate con caballa y queso fresco', ingredientes:'2½ tomates (290g), queso fresco (60g), ½ filete caballa (60g), ½ cebolla (50g), vinagre módena (5g)', elaboracion:'Condimentar al gusto.', video:'https://www.youtube.com/results?search_query=ensalada+tomate+caballa+queso+fresco' },
+      { nombre:'Macedonia de yogur con manzana y canela', ingredientes:'1 yogur desnatado (120g), ½ manzana (100g), pizca canela', elaboracion:null, video:null },
       { nombre:'Cerveza rubia', ingredientes:'1½ caña cerveza rubia (250g)', elaboracion:null, video:null }
     ]
   }
 };
 
 const COMPRA = {
-  'Frutas y verduras': ['Tomate', 'Tomate cherry', 'Calabacín', 'Pimiento rojo', 'Pimiento verde', 'Cebolla', 'Brócoli', 'Champiñones', 'Rúcula', 'Brotes espinacas y canónigos', 'Remolacha', 'Zanahoria', 'Patatas', 'Aguacate', 'Manzana', 'Fresas', 'Frutos rojos', 'Kiwi', 'Mango'],
-  'Carnes y embutidos': ['Pechuga de pollo', 'Solomillo de cerdo', 'Hamburguesa', 'Jamón ibérico'],
-  'Pescados': ['Salmón fresco', 'Dorada', 'Caballa', 'Atún en aceite (lata)'],
-  'Lácteos y quesos': ['Leche desnatada', 'Yogur desnatado', 'Queso Philadelphia light', 'Queso rulo de cabra', 'Queso mozzarella', 'Queso fresco', 'Queso feta', 'Queso roquefort', 'Queso manchego semicurado'],
-  'Panadería y cereales': ['Pan integral (rebanadas)', 'Pan de hamburguesa', 'Pasta', 'Base de pizza'],
-  'Legumbres': ['Lentejas'],
+  'Frutas y verduras': ['Tomate', 'Tomate cherry', 'Pimiento rojo', 'Pimiento verde', 'Cebolla', 'Calabacín', 'Cogollos', 'Espárragos verdes', 'Pepinos', 'Rúcula', 'Brotes espinacas y canónigos', 'Manzana', 'Aguacate', 'Mango', 'Piña natural'],
+  'Carnes y embutidos': ['Pechuga de pollo', 'Cerdo-lomo', 'Ternera-lomo', 'Jamón ibérico', 'Jamón serrano'],
+  'Pescados': ['Salmón fresco', 'Salmón ahumado', 'Bonito fresco', 'Caballa', 'Pulpo', 'Atún en aceite (lata)', 'Anchoas en aceite (lata)'],
+  'Lácteos y quesos': ['Leche desnatada', 'Yogur desnatado', 'Queso fresco', 'Queso mozzarella', 'Queso roquefort', 'Queso parmesano', 'Queso rulo de cabra'],
+  'Panadería y cereales': ['Pan integral (rebanadas)', 'Arroz', 'Maíz cocido'],
+  'Legumbres': ['Garbanzos cocidos'],
   'Huevos': ['Huevos (docena)'],
   'Bebidas': ['Cerveza rubia', 'Café natural'],
-  'Frutos secos': ['Nueces'],
-  'Aceites y condimentos': ['Aceite de oliva', 'Vinagre', 'Vinagre de módena', 'Mahonesa', 'Mostaza', 'Miel', 'Salsa de soja', 'Canela', 'Pepinillos a la vinagreta', 'Ajo']
+  'Conservas y otros': ['Hummus', 'Gazpacho de tomate (preparado)'],
+  'Aceites y condimentos': ['Aceite de oliva', 'Vinagre', 'Vinagre de módena', 'Crema de módena', 'Mahonesa', 'Mostaza', 'Miel', 'Salsa de soja', 'Canela']
 };
-
-
 
 function saveChecked() {
   const obj = {};
-  getAllItems().forEach(item => { obj[item.replace(/[.#$/\[\]]/g, '_')] = checkedItems.has(item); });
+  getAllItems().forEach(item => { obj[item.replace(/[.#$\/\[\]]/g, '_')] = checkedItems.has(item); });
   compraRef.set(obj).catch(e => console.error('Firebase write error:', e));
 }
 
@@ -297,7 +300,6 @@ function showView(v) {
   document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
   document.getElementById('view-' + v).classList.add('active');
   document.querySelectorAll('.tab').forEach(el => { if (el.textContent.toLowerCase().includes(v === 'semanal' ? 'semanal' : v === 'diaria' ? 'diaria' : 'compra')) el.classList.add('active'); });
-  if (v === 'compra') rebuildCompraUI();
 }
 
 function getDailyIngredients(day) {
@@ -398,9 +400,9 @@ function printCompra() {
     });
     rows += '</div>';
   });
-  const html = `<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Lista de la compra — Mes 2</title>
-<style>body{font-family:'Segoe UI',sans-serif;color:#1a1a1a;padding:2rem;font-size:13px;}h1{font-size:20px;font-weight:600;margin-bottom:4px;}.sub{font-size:12px;color:#666;margin-bottom:1.5rem;border-bottom:1px solid #ccc;padding-bottom:.75rem;}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}.cat{break-inside:avoid;margin-bottom:8px;}.cat-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666;border-bottom:.5px solid #ccc;padding-bottom:3px;margin-bottom:5px;}.item{display:flex;align-items:center;gap:7px;padding:3px 0;border-bottom:.5px solid #eee;}.item:last-child{border-bottom:none;}.item.done{text-decoration:line-through;color:#aaa;}.box{width:12px;height:12px;border:1px solid #999;border-radius:2px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;}.box.checked{background:#1D9E75;border-color:#1D9E75;color:white;}.footer{margin-top:1.5rem;text-align:center;font-size:10px;color:#999;border-top:.5px solid #eee;padding-top:.5rem;}</style></head><body>
-<h1>Lista de la compra — Mes 2</h1><div class="sub">Hilario Cambero &mdash; Nutricionista: Mar&#237;a Rosco Rodr&#237;guez</div>
+  const html = `<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Lista de la compra — Mes 3</title>
+<style>body{font-family:'Segoe UI',sans-serif;color:#1a1a1a;padding:2rem;font-size:13px;}h1{font-size:20px;font-weight:600;margin-bottom:4px;}.sub{font-size:12px;color:#666;margin-bottom:1.5rem;border-bottom:1px solid #ccc;padding-bottom:.75rem;}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}.cat{break-inside:avoid;margin-bottom:8px;}.cat-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666;border-bottom:.5px solid #ccc;padding-bottom:3px;margin-bottom:5px;}.item{display:flex;align-items:center;gap:7px;padding:3px 0;border-bottom:.5px solid #eee;}.item:last-child{border-bottom:none;}.item.done{text-decoration:line-through;color:#aaa;}.box{width:12px;height:12px;border:1px solid #999;border-radius:2px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;}.box.checked{background:#7C3AED;border-color:#7C3AED;color:white;}.footer{margin-top:1.5rem;text-align:center;font-size:10px;color:#999;border-top:.5px solid #eee;padding-top:.5rem;}</style></head><body>
+<h1>Lista de la compra — Mes 3</h1><div class="sub">Hilario Cambero &mdash; Nutricionista: Mar&#237;a Rosco Rodr&#237;guez</div>
 <div class="grid">${rows}</div><div class="footer">Impreso el ${now}</div></body></html>`;
   const blob = new Blob([html],{type:'text/html'});
   const url = URL.createObjectURL(blob);
@@ -427,11 +429,7 @@ compraRef.on('value', (snapshot) => {
   updateProgress();
 });
 
-buildWeekGrid(); buildDayButtons(); selectDay('Lunes');
-rebuildCompraUI();
-
-
-// Exponer funciones al scope global para los onclick del HTML
+// Exponer funciones al scope global
 window.showView = showView;
 window.selectWeekDay = selectWeekDay;
 window.selectDay = selectDay;
@@ -440,6 +438,8 @@ window.toggleItem = toggleItem;
 window.resetCompra = resetCompra;
 window.printCompra = printCompra;
 window.rebuildCompraUI = rebuildCompraUI;
+
+buildWeekGrid(); buildDayButtons(); selectDay('Lunes');
 
 }); // end window.onload
 </script>

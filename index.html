@@ -7,171 +7,103 @@
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --bg: #f8f7f4;
-  --surface: #ffffff;
-  --border: rgba(0,0,0,0.1);
-  --text: #1a1a1a;
-  --text2: #5a5a5a;
-  --text3: #999;
-  --green: #1D9E75;
-  --green-light: #E1F5EE;
-  --green-mid: #9FE1CB;
-  --green-dark: #0F6E56;
-  --orange: #E07B39;
-  --orange-light: #FDF0E8;
-  --orange-mid: #F5C4A0;
-  --orange-dark: #9E4E1D;
+  --bg: #f8f7f4; --surface: #ffffff; --border: rgba(0,0,0,0.1);
+  --text: #1a1a1a; --text2: #5a5a5a; --text3: #999;
+  --green: #1D9E75; --green-light: #E1F5EE; --green-dark: #0F6E56;
+  --orange: #E07B39; --orange-light: #FDF0E8; --orange-dark: #9E4E1D;
+  --purple: #7C3AED; --purple-light: #EDE9FE; --purple-dark: #5B21B6;
 }
-body {
-  font-family: 'Segoe UI', system-ui, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-header {
-  background: var(--surface);
-  border-bottom: 0.5px solid var(--border);
-  padding: 1.5rem 2rem;
-  text-align: center;
-}
+body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+header { background: var(--surface); border-bottom: 0.5px solid var(--border); padding: 1.5rem 2rem; text-align: center; }
 .header-title { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
 .header-sub { font-size: 13px; color: var(--text3); }
 .header-nutri { font-size: 12px; color: var(--green-dark); margin-top: 6px; }
-
-.container {
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 3rem 1.5rem;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
+.container { max-width: 900px; margin: 0 auto; padding: 3rem 1.5rem; flex: 1; display: flex; flex-direction: column; align-items: center; }
 .intro { text-align: center; margin-bottom: 2.5rem; }
 .intro h2 { font-size: 17px; font-weight: 600; margin-bottom: 8px; }
 .intro p { font-size: 14px; color: var(--text2); line-height: 1.6; }
-
-.cards { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; }
-
-.card {
-  background: var(--surface);
-  border: 0.5px solid var(--border);
-  border-radius: 16px;
-  padding: 2rem 1.5rem;
-  text-decoration: none;
-  color: inherit;
-  transition: all 0.2s;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 12px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-}
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; }
+.card { background: var(--surface); border: 0.5px solid var(--border); border-radius: 16px; padding: 2rem 1.5rem; text-decoration: none; color: inherit; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
 .card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
-
 .card-mes1 { border-top: 3px solid var(--green); }
 .card-mes2 { border-top: 3px solid var(--orange); }
-
+.card-mes3 { border-top: 3px solid var(--purple); }
 .card-icon { font-size: 36px; }
-.card-badge {
-  font-size: 10px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.08em; border-radius: 20px; padding: 3px 10px;
-}
+.card-badge { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; border-radius: 20px; padding: 3px 10px; }
 .badge-mes1 { background: var(--green-light); color: var(--green-dark); }
 .badge-mes2 { background: var(--orange-light); color: var(--orange-dark); }
-
+.badge-mes3 { background: var(--purple-light); color: var(--purple-dark); }
 .card-title { font-size: 18px; font-weight: 700; }
 .card-desc { font-size: 13px; color: var(--text2); line-height: 1.5; }
-
 .card-features { list-style: none; width: 100%; text-align: left; }
-.card-features li {
-  font-size: 12px; color: var(--text2);
-  padding: 4px 0;
-  border-bottom: 0.5px solid var(--border);
-  display: flex; align-items: center; gap: 6px;
-}
+.card-features li { font-size: 12px; color: var(--text2); padding: 4px 0; border-bottom: 0.5px solid var(--border); display: flex; align-items: center; gap: 6px; }
 .card-features li:last-child { border-bottom: none; }
-
-.card-btn {
-  margin-top: 8px;
-  padding: 10px 24px;
-  border-radius: 20px;
-  font-size: 14px; font-weight: 600;
-  width: 100%;
-  border: none; cursor: pointer;
-  transition: opacity 0.15s;
-}
+.card-btn { margin-top: 8px; padding: 10px 24px; border-radius: 20px; font-size: 14px; font-weight: 600; width: 100%; border: none; cursor: pointer; transition: opacity 0.15s; }
 .card-btn:hover { opacity: 0.85; }
 .btn-mes1 { background: var(--green); color: white; }
 .btn-mes2 { background: var(--orange); color: white; }
-
-.footer {
-  text-align: center;
-  padding: 1.5rem;
-  font-size: 11px;
-  color: var(--text3);
-  border-top: 0.5px solid var(--border);
-}
-
-@media (max-width: 500px) {
-  .cards { grid-template-columns: 1fr; }
-}
+.btn-mes3 { background: var(--purple); color: white; }
+.footer { text-align: center; padding: 1.5rem; font-size: 11px; color: var(--text3); border-top: 0.5px solid var(--border); }
+@media (max-width: 700px) { .cards { grid-template-columns: 1fr; } }
+@media (max-width: 900px) and (min-width: 701px) { .cards { grid-template-columns: repeat(2, 1fr); } .card-mes3 { grid-column: 1 / -1; max-width: 400px; margin: 0 auto; width: 100%; } }
 </style>
 </head>
 <body>
-
 <header>
   <div class="header-title">🥗 Mis Planificadores de Dieta</div>
   <div class="header-sub">Hilario Cambero</div>
   <div class="header-nutri">Nutricionista: María Rosco Rodríguez · 625 712 125</div>
 </header>
-
 <div class="container">
   <div class="intro">
     <h2>Elige tu dieta activa</h2>
     <p>Accede al planificador semanal, recetas detalladas y lista de la compra de cada mes.</p>
   </div>
-
   <div class="cards">
     <a class="card card-mes1" href="planificador_dieta_hilario.html">
       <div class="card-icon">🌿</div>
       <div class="card-badge badge-mes1">Mes 1</div>
       <div class="card-title">Dieta Mes 1</div>
-      <div class="card-desc">Menú semanal con cremas, bacalao, arroz con pollo, salmón y ensaladas variadas.</div>
+      <div class="card-desc">Cremas, bacalao entomatado, arroz con pollo, salmón y ensaladas variadas.</div>
       <ul class="card-features">
         <li>📅 Vista semanal y diaria</li>
         <li>🧂 Ingredientes y elaboración</li>
         <li>▶ Vídeos de recetas</li>
-        <li>🛒 Lista de la compra sincronizada</li>
+        <li>🛒 Lista sincronizada en la nube</li>
         <li>🖨️ Impresión de lista</li>
       </ul>
       <button class="card-btn btn-mes1">Abrir Mes 1</button>
     </a>
-
     <a class="card card-mes2" href="planificador_dieta_mes2.html">
       <div class="card-icon">🍊</div>
       <div class="card-badge badge-mes2">Mes 2</div>
       <div class="card-title">Dieta Mes 2</div>
-      <div class="card-desc">Menú renovado con solomillo, ensaladas de pasta, parrilladas, pizza y macedonias de yogur.</div>
+      <div class="card-desc">Solomillo, ensaladas de pasta, parrilladas, pizza de champiñones y macedonias.</div>
       <ul class="card-features">
         <li>📅 Vista semanal y diaria</li>
         <li>🧂 Ingredientes y elaboración</li>
         <li>▶ Vídeos de recetas</li>
-        <li>🛒 Lista de la compra independiente</li>
+        <li>🛒 Lista sincronizada en la nube</li>
         <li>🖨️ Impresión de lista</li>
       </ul>
       <button class="card-btn btn-mes2">Abrir Mes 2</button>
     </a>
+    <a class="card card-mes3" href="planificador_dieta_mes3.html">
+      <div class="card-icon">☀️</div>
+      <div class="card-badge badge-mes3">Mes 3</div>
+      <div class="card-title">Dieta Mes 3</div>
+      <div class="card-desc">Gazpacho, salpicón de pulpo, ensalada de sushi, bonito a la plancha y revueltos.</div>
+      <ul class="card-features">
+        <li>📅 Vista semanal y diaria</li>
+        <li>🧂 Ingredientes y elaboración</li>
+        <li>▶ Vídeos de recetas</li>
+        <li>🛒 Lista sincronizada en la nube</li>
+        <li>🖨️ Impresión de lista</li>
+      </ul>
+      <button class="card-btn btn-mes3">Abrir Mes 3</button>
+    </a>
   </div>
 </div>
-
-<div class="footer">
-  Planificador de dieta personalizado · Hilario Cambero · María Rosco Rodríguez — Nutrición y Dietoterapia
-</div>
-
+<div class="footer">Planificador de dieta personalizado · Hilario Cambero · María Rosco Rodríguez — Nutrición y Dietoterapia</div>
 </body>
 </html>
