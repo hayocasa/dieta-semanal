@@ -17,7 +17,7 @@ header { background: var(--surface); border-bottom: 0.5px solid var(--border); p
 .intro h2 { font-size: 17px; font-weight: 600; margin-bottom: 8px; }
 .intro p { font-size: 14px; color: var(--text2); line-height: 1.6; }
 .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; width: 100%; }
-.card-row2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; width: 100%; margin-top: 16px; max-width: 680px; }
+.card-row2 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; width: 100%; margin-top: 16px; }
 .card { background: var(--surface); border: 0.5px solid var(--border); border-radius: 16px; padding: 1.5rem 1.25rem; text-decoration: none; color: inherit; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
 .card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
 .card-mes1 { border-top: 3px solid #1D9E75; }
@@ -25,6 +25,7 @@ header { background: var(--surface); border-bottom: 0.5px solid var(--border); p
 .card-mes3 { border-top: 3px solid #7C3AED; }
 .card-mes4 { border-top: 3px solid #DC2626; }
 .card-mes5 { border-top: 3px solid #0369A1; }
+.card-mes6 { border-top: 3px solid #0F766E; }
 .card-icon { font-size: 28px; }
 .card-badge { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; border-radius: 20px; padding: 3px 10px; }
 .badge-mes1 { background: #E1F5EE; color: #0F6E56; }
@@ -32,6 +33,7 @@ header { background: var(--surface); border-bottom: 0.5px solid var(--border); p
 .badge-mes3 { background: #EDE9FE; color: #5B21B6; }
 .badge-mes4 { background: #FEE2E2; color: #991B1B; }
 .badge-mes5 { background: #E0F2FE; color: #0C4A6E; }
+.badge-mes6 { background: #CCFBF1; color: #134E4A; }
 .card-title { font-size: 15px; font-weight: 700; }
 .card-desc { font-size: 11px; color: var(--text2); line-height: 1.5; }
 .card-features { list-style: none; width: 100%; text-align: left; }
@@ -44,9 +46,10 @@ header { background: var(--surface); border-bottom: 0.5px solid var(--border); p
 .btn-mes3 { background: #7C3AED; color: white; }
 .btn-mes4 { background: #DC2626; color: white; }
 .btn-mes5 { background: #0369A1; color: white; }
+.btn-mes6 { background: #0F766E; color: white; }
 .footer { text-align: center; padding: 1.5rem; font-size: 11px; color: var(--text3); border-top: 0.5px solid var(--border); }
-@media (max-width: 700px) { .cards { grid-template-columns: 1fr; } .card-row2 { grid-template-columns: 1fr; max-width: 100%; } }
-@media (max-width: 900px) and (min-width: 701px) { .cards { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 700px) { .cards { grid-template-columns: 1fr; } .card-row2 { grid-template-columns: 1fr; } }
+@media (max-width: 900px) and (min-width: 701px) { .cards { grid-template-columns: repeat(2, 1fr); } .card-row2 { grid-template-columns: repeat(2, 1fr); } }
 </style>
 </head>
 <body>
@@ -127,6 +130,19 @@ header { background: var(--surface); border-bottom: 0.5px solid var(--border); p
         <li>🖨️ Impresión de lista</li>
       </ul>
       <button class="card-btn btn-mes5">Abrir Mes 5</button>
+    </a>
+    <a class="card card-mes6" href="planificador_dieta_mes6.html">
+      <div class="card-icon">🌿</div>
+      <div class="card-badge badge-mes6">Mes 6</div>
+      <div class="card-title">Dieta Mes 6</div>
+      <div class="card-desc">Crema de calabacín, pasta con setas y feta, cocido tradicional y pollo al horno.</div>
+      <ul class="card-features">
+        <li>📅 Vista semanal y diaria</li>
+        <li>🧂 Ingredientes y elaboración</li>
+        <li>🛒 Lista sincronizada en la nube</li>
+        <li>🖨️ Impresión de lista</li>
+      </ul>
+      <button class="card-btn btn-mes6">Abrir Mes 6</button>
     </a>
   </div>
 </div>
